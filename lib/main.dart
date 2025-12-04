@@ -308,19 +308,89 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      color: Colors.grey[200],
-      padding: const EdgeInsets.symmetric(vertical: 32),
-      child: Column(
-        children: const [
-          Text(
-            'Footer',
-            style: TextStyle(color: Colors.grey, fontSize: 16),
-            textAlign: TextAlign.center,
+      color: Colors.grey[100],
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Opening Hours
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Opening Hours',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  '❄️ Winter Break Closure Dates ❄️\n\n'
+                  'Closing 4pm 19/12/2025\n'
+                  'Reopening 10am 05/01/2026\n'
+                  'Last post date: 12pm on 18/12/2025\n\n'
+                  '----------------------\n'
+                  '(Term Time)\n'
+                  'Monday - Friday 10am - 4pm\n\n'
+                  '(Outside of Term Time / Consolidation Weeks)\n'
+                  'Monday - Friday 10am - 3pm\n\n'
+                  'Purchase online 24/7',
+                  style: TextStyle(fontSize: 13),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 12),
-          Text('Home | Products | Contact',
-              style: TextStyle(color: Colors.blueGrey)),
+          // Help and Information
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text(
+                  'Help and Information',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text('Search'),
+                Text('Terms & Conditions of Sale'),
+                Text('Policy'),
+              ],
+            ),
+          ),
+          // Latest Offers
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Latest Offers',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Email address',
+                          border: OutlineInputBorder(),
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF4d2963),
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      ),
+                      onPressed: () {},
+                      child: const Text('SUBSCRIBE'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
