@@ -92,7 +92,9 @@ class CollectionCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () {}, // Add navigation if needed
+        onTap: () {
+          Navigator.pushNamed(context, '/collection', arguments: title);
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
