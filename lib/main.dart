@@ -72,9 +72,14 @@ class Navbar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: Image.asset(
-              'assets/the_union_logo.png',
-              height: 38,
+            child: const Text(
+              'The UNION',
+              style: TextStyle(
+                color: Color(0xFF4d2963),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
             ),
           ),
           const Spacer(),
