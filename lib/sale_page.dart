@@ -61,8 +61,12 @@ class SaleSortDropdown extends StatelessWidget {
             value: 'Sort by',
             items: const [
               DropdownMenuItem(value: 'Sort by', child: Text('Sort by')),
-              DropdownMenuItem(value: 'Price: Low to High', child: Text('Price: Low to High')),
-              DropdownMenuItem(value: 'Price: High to Low', child: Text('Price: High to Low')),
+              DropdownMenuItem(
+                  value: 'Price: Low to High',
+                  child: Text('Price: Low to High')),
+              DropdownMenuItem(
+                  value: 'Price: High to Low',
+                  child: Text('Price: High to Low')),
             ],
             onChanged: (value) {}, // Non-functional
           ),
@@ -80,25 +84,29 @@ class SaleProductGrid extends StatelessWidget {
     final products = [
       {
         'title': 'Union Hoodie',
-        'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£25.00',
         'price': '£17.99',
       },
       {
         'title': 'Union T-Shirt',
-        'imageUrl': 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£12.00',
         'price': '£7.99',
       },
       {
         'title': 'Union Beanie',
-        'imageUrl': 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£10.00',
         'price': '£5.99',
       },
       {
         'title': 'Union Mug',
-        'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£8.00',
         'price': '£4.99',
       },
