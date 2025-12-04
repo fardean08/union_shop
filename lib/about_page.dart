@@ -42,7 +42,8 @@ class Navbar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net'].map((item) {
+          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net']
+              .map((item) {
             if (item == 'Home') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
