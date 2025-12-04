@@ -493,53 +493,58 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AspectRatio(
-          aspectRatio: 1.2,
-          child: Image.network(
-            imageUrl,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                color: Colors.grey[300],
-                child: const Center(
-                  child: Icon(Icons.image_not_supported, color: Colors.grey),
-                ),
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          title,
-          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-          maxLines: 2,
-        ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            if (oldPrice != null)
-              Text(
-                oldPrice!,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey,
-                  decoration: TextDecoration.lineThrough,
-                ),
-              ),
-            if (oldPrice != null) const SizedBox(width: 8),
-            Text(
-              price,
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.deepPurple,
-                  fontWeight: FontWeight.bold),
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/product');
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 1.2,
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey[300],
+                  child: const Center(
+                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
-      ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+            maxLines: 2,
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              if (oldPrice != null)
+                Text(
+                  oldPrice!,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                ),
+              if (oldPrice != null) const SizedBox(width: 8),
+              Text(
+                price,
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
