@@ -326,6 +326,24 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+class ProductPage extends StatelessWidget {
+  const ProductPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            Navbar(),
+            Footer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class ProductCard extends StatelessWidget {
   final String title;
   final String price;
