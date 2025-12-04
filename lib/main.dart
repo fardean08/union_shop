@@ -336,6 +336,16 @@ class ProductPage extends StatelessWidget {
         child: Column(
           children: const [
             Navbar(),
+            // Large product image section
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 32),
+              child: Image(
+                image: NetworkImage('https://via.placeholder.com/600x400?text=Product+Image'),
+                width: 600,
+                height: 400,
+                fit: BoxFit.cover,
+              ),
+            ),
             Footer(),
           ],
         ),
