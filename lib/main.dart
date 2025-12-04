@@ -83,7 +83,7 @@ class Navbar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net']
+          ...['Home', 'Shop', 'SALE!', 'About']
               .map((item) {
             if (item == 'Home') {
               return Padding(
@@ -154,17 +154,7 @@ class Navbar extends StatelessWidget {
                 ),
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  item,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
+              return const SizedBox.shrink();
             }
           }),
           const Spacer(),
