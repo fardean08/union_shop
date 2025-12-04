@@ -150,6 +150,76 @@ class CollectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? title = ModalRoute.of(context)?.settings.arguments as String?;
+    // Placeholder products for each category
+    final products = {
+      'Hoodies': [
+        ProductCard(
+            title: 'Hoodie 1',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Hoodie+1',
+            oldPrice: '£25.00',
+            price: '£19.99'),
+        ProductCard(
+            title: 'Hoodie 2',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Hoodie+2',
+            oldPrice: '£30.00',
+            price: '£24.99'),
+        ProductCard(
+            title: 'Hoodie 3',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Hoodie+3',
+            oldPrice: '£28.00',
+            price: '£21.99'),
+        ProductCard(
+            title: 'Hoodie 4',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Hoodie+4',
+            oldPrice: '£32.00',
+            price: '£26.99'),
+      ],
+      'Jumpers': [
+        ProductCard(
+            title: 'Jumper 1',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Jumper+1',
+            oldPrice: '£20.00',
+            price: '£15.99'),
+        ProductCard(
+            title: 'Jumper 2',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Jumper+2',
+            oldPrice: '£22.00',
+            price: '£17.99'),
+        ProductCard(
+            title: 'Jumper 3',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Jumper+3',
+            oldPrice: '£24.00',
+            price: '£19.99'),
+        ProductCard(
+            title: 'Jumper 4',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Jumper+4',
+            oldPrice: '£26.00',
+            price: '£21.99'),
+      ],
+      'Accessories': [
+        ProductCard(
+            title: 'Accessory 1',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Accessory+1',
+            oldPrice: '£5.00',
+            price: '£3.99'),
+        ProductCard(
+            title: 'Accessory 2',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Accessory+2',
+            oldPrice: '£6.00',
+            price: '£4.99'),
+        ProductCard(
+            title: 'Accessory 3',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Accessory+3',
+            oldPrice: '£7.00',
+            price: '£5.99'),
+        ProductCard(
+            title: 'Accessory 4',
+            imageUrl: 'https://via.placeholder.com/400x400?text=Accessory+4',
+            oldPrice: '£8.00',
+            price: '£6.99'),
+      ],
+    };
+    final selectedProducts = products[title] ?? products['Hoodies'];
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -166,13 +236,104 @@ class CollectionPage extends StatelessWidget {
                         fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 24),
-                  const Text('This is a placeholder for the collection page.'),
+                  GridView.count(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 24,
+                    mainAxisSpacing: 24,
+                    childAspectRatio: 1,
+                    children:
+                        (selectedProducts ?? <ProductCard>[]).cast<Widget>(),
+                  ),
                 ],
               ),
             ),
             const Footer(),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ProductCard extends StatelessWidget {
+  final String title;
+  final String imageUrl;
+  final String oldPrice;
+  final String price;
+
+  const ProductCard({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+    required this.oldPrice,
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[300],
+                    child: const Center(
+                      child:
+                          Icon(Icons.image_not_supported, color: Colors.grey),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF4d2963)),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  oldPrice,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  price,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4d2963),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

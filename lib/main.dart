@@ -261,8 +261,7 @@ class FeaturedSection extends StatelessWidget {
               Expanded(
                 child: ProductCard(
                   title: 'Limited Edition Essential Zip Hoodies',
-                  imageUrl:
-                      'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+                  imageUrl: 'https://via.placeholder.com/400x400?text=Hoodie',
                   oldPrice: '£20.00',
                   price: '£14.99',
                 ),
@@ -271,10 +270,28 @@ class FeaturedSection extends StatelessWidget {
               Expanded(
                 child: ProductCard(
                   title: 'Essential T-Shirt',
-                  imageUrl:
-                      'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+                  imageUrl: 'https://via.placeholder.com/400x400?text=T-Shirt',
                   oldPrice: '£10.00',
                   price: '£6.99',
+                ),
+              ),
+              SizedBox(width: 24),
+              Expanded(
+                child: ProductCard(
+                  title: 'Signature Hoodie',
+                  imageUrl:
+                      'https://via.placeholder.com/400x400?text=Signature+Hoodie',
+                  oldPrice: '£32.99',
+                  price: '£24.99',
+                ),
+              ),
+              SizedBox(width: 24),
+              Expanded(
+                child: ProductCard(
+                  title: 'Portsmouth City Magnet',
+                  imageUrl: 'https://via.placeholder.com/400x400?text=Magnet',
+                  oldPrice: null,
+                  price: '£4.50',
                 ),
               ),
             ],
