@@ -353,13 +353,17 @@ class Footer extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                InkWell(
-                  onTap: () {}, // Dummy link
-                  child: const Text(
-                    'Search',
-                    style: TextStyle(
-                      color: Color(0xFF4d2963),
-                      decoration: TextDecoration.underline,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 12),
+                  child: TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      prefixIcon: Icon(Icons.search, color: Color(0xFF4d2963)),
+                      border: OutlineInputBorder(),
+                      isDense: true,
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     ),
                   ),
                 ),
@@ -537,8 +541,8 @@ class ProductPage extends StatelessWidget {
                                 const Icon(Icons.remove, color: Colors.grey),
                                 const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
-                                  child: Text('1',
-                                      style: TextStyle(fontSize: 16)),
+                                  child:
+                                      Text('1', style: TextStyle(fontSize: 16)),
                                 ),
                                 const Icon(Icons.add, color: Colors.grey),
                               ],
