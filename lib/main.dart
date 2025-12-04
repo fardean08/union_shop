@@ -26,6 +26,28 @@ class UnionShopApp extends StatelessWidget {
   }
 }
 
+class Navbar extends StatelessWidget {
+  const Navbar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: Colors.deepPurple,
+      padding: const EdgeInsets.symmetric(vertical: 24),
+      child: const Text(
+        'NAVBAR',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -36,19 +58,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // Navbar
-            Container(
-              width: double.infinity,
-              color: Colors.deepPurple,
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: const Text(
-                'NAVBAR',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            const Navbar(),
             // Hero Banner
             Container(
               width: double.infinity,
