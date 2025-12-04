@@ -32,18 +32,22 @@ class Navbar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
-          const Text(
-            'The UNION',
-            style: TextStyle(
-              color: Color(0xFF4d2963),
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/');
+            },
+            child: const Text(
+              'The UNION',
+              style: TextStyle(
+                color: Color(0xFF4d2963),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
             ),
           ),
           const Spacer(),
-          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net']
-              .map((item) {
+          ...['Home', 'Shop', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -53,6 +57,40 @@ class Navbar extends StatelessWidget {
                   },
                   child: const Text(
                     'Home',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              );
+            } else if (item == 'Shop') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/collections');
+                  },
+                  child: const Text(
+                    'Shop',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              );
+            } else if (item == 'SALE!') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/sale');
+                  },
+                  child: const Text(
+                    'SALE!',
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 16,
@@ -79,21 +117,16 @@ class Navbar extends StatelessWidget {
                 ),
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  item,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              );
+              return const SizedBox.shrink();
             }
           }),
           const Spacer(),
-          const Icon(Icons.person_outline, color: Colors.black54),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
+            },
+            child: const Icon(Icons.person_outline, color: Colors.black54),
+          ),
           const SizedBox(width: 12),
           const Icon(Icons.shopping_cart_outlined, color: Colors.black54),
         ],
