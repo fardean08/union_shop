@@ -73,6 +73,15 @@ class SignupForm extends StatelessWidget {
             child: const Text('Sign Up',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/login');
+            },
+            child: const Text(
+              "Already have an account? Login",
+              style: TextStyle(fontSize: 16, color: Colors.deepPurple),
+            ),
+          ),
         ],
       ),
     );
