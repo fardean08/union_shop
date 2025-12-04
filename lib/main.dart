@@ -74,12 +74,11 @@ class Navbar extends StatelessWidget {
             },
             child: Image.asset(
               'assets/the_union_logo.png',
-              height: 40,
+              height: 38,
             ),
           ),
           const Spacer(),
-          ...['Home', 'Shop', 'SALE!', 'About']
-              .map((item) {
+          ...['Home', 'Shop', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -157,10 +156,12 @@ class Navbar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/login');
             },
-            child: const Icon(Icons.person_outline, color: Colors.black54),
+            child: const Icon(Icons.person_outline,
+                color: Colors.black54, size: 28),
           ),
-          const SizedBox(width: 12),
-          const Icon(Icons.shopping_cart_outlined, color: Colors.black54),
+          const SizedBox(width: 18),
+          const Icon(Icons.shopping_cart_outlined,
+              color: Colors.black54, size: 28),
         ],
       ),
     );
