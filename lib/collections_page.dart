@@ -66,9 +66,18 @@ class CollectionsGrid extends StatelessWidget {
             mainAxisSpacing: 24,
             childAspectRatio: 0.85,
             children: collections.map((collection) {
-              return CollectionCard(
-                title: collection['title']!,
-                imageUrl: collection['image']!,
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/collection',
+                    arguments: collection['title'],
+                  );
+                },
+                child: CollectionCard(
+                  title: collection['title']!,
+                  imageUrl: collection['image']!,
+                ),
               );
             }).toList(),
           ),
