@@ -446,6 +446,24 @@ class ProductPage extends StatelessWidget {
                 ],
               ),
             ),
+            // Product description section
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Product Description',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 12),
+                  Text(
+                    'This is a placeholder for the product description. Here you can add details about the product, materials, sizing, care instructions, and more.',
+                    style: TextStyle(fontSize: 15, color: Colors.black87),
+                  ),
+                ],
+              ),
+            ),
             const Footer(),
           ],
         ),
