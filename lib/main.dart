@@ -370,6 +370,29 @@ class ProductPage extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 24),
+                      // Non-functional Dropdowns
+                      DropdownButton<String>(
+                        value: 'Size',
+                        items: [
+                          DropdownMenuItem(value: 'Size', child: Text('Size')),
+                          DropdownMenuItem(value: 'S', child: Text('S')),
+                          DropdownMenuItem(value: 'M', child: Text('M')),
+                          DropdownMenuItem(value: 'L', child: Text('L')),
+                        ],
+                        onChanged: null,
+                      ),
+                      SizedBox(height: 12),
+                      DropdownButton<String>(
+                        value: 'Colour',
+                        items: [
+                          DropdownMenuItem(value: 'Colour', child: Text('Colour')),
+                          DropdownMenuItem(value: 'Red', child: Text('Red')),
+                          DropdownMenuItem(value: 'Blue', child: Text('Blue')),
+                          DropdownMenuItem(value: 'Green', child: Text('Green')),
+                        ],
+                        onChanged: null,
+                      ),
                     ],
                   ),
                 ],
