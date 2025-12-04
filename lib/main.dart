@@ -343,15 +343,24 @@ class Footer extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Help and Information',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
-                Text('Search'),
-                Text('Terms & Conditions of Sale'),
-                Text('Policy'),
+                const SizedBox(height: 8),
+                InkWell(
+                  onTap: () {}, // Dummy link
+                  child: const Text(
+                    'Search',
+                    style: TextStyle(
+                      color: Color(0xFF4d2963),
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                const Text('Terms & Conditions of Sale'),
+                const Text('Policy'),
               ],
             ),
           ),
