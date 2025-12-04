@@ -30,6 +30,8 @@ class UnionShopApp extends StatelessWidget {
         '/collections': (context) => const CollectionsPage(),
         '/collection': (context) => const CollectionPage(),
         '/sale': (context) => const SalePage(),
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
       },
     );
   }
@@ -159,7 +161,12 @@ class Navbar extends StatelessWidget {
             }
           }),
           const Spacer(),
-          const Icon(Icons.person_outline, color: Colors.black54),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/login');
+            },
+            child: const Icon(Icons.person_outline, color: Colors.black54),
+          ),
           const SizedBox(width: 12),
           const Icon(Icons.shopping_cart_outlined, color: Colors.black54),
         ],
