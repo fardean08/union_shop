@@ -1,0 +1,97 @@
+import 'package:flutter/material.dart';
+import 'main.dart';
+
+class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            AnnouncementBar(),
+            Navbar(),
+            HeroTitle(),
+            AboutSection(),
+            Footer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HeroTitle extends StatelessWidget {
+  const HeroTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 180,
+      decoration: const BoxDecoration(
+        color: Color(0xFF4d2963),
+      ),
+      child: Center(
+        child: Text(
+          'About The Student Union',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
+class AboutSection extends StatelessWidget {
+  const AboutSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          SectionHeading(title: 'Who We Are'),
+          SizedBox(height: 12),
+          Text(
+            'We are the official Student Union, dedicated to supporting and representing students. Our team is passionate about making your university experience the best it can be.',
+            style: TextStyle(fontSize: 16, color: Colors.black87),
+          ),
+          SizedBox(height: 32),
+          SectionHeading(title: 'What We Do'),
+          SizedBox(height: 12),
+          Text(
+            'We run events, campaigns, and provide services for students. From advice and support to fun activities and opportunities, we are here for you throughout your studies.',
+            style: TextStyle(fontSize: 16, color: Colors.black87),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SectionHeading extends StatelessWidget {
+  final String title;
+  const SectionHeading({required this.title, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF4d2963),
+        letterSpacing: 1,
+      ),
+    );
+  }
+}
