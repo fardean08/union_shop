@@ -66,7 +66,8 @@ class LoginPage extends StatelessWidget {
                       },
                       child: const Text(
                         "Don't have an account? Sign Up",
-                        style: TextStyle(fontSize: 16, color: Colors.deepPurple),
+                        style:
+                            TextStyle(fontSize: 16, color: Colors.deepPurple),
                       ),
                     ),
                   ],
