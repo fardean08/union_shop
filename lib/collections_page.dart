@@ -7,9 +7,18 @@ class CollectionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final collections = [
-      {'title': 'Hoodies', 'image': 'https://via.placeholder.com/200x150?text=Hoodies'},
-      {'title': 'Jumpers', 'image': 'https://via.placeholder.com/200x150?text=Jumpers'},
-      {'title': 'Accessories', 'image': 'https://via.placeholder.com/200x150?text=Accessories'},
+      {
+        'title': 'Hoodies',
+        'image': 'https://via.placeholder.com/200x150?text=Hoodies'
+      },
+      {
+        'title': 'Jumpers',
+        'image': 'https://via.placeholder.com/200x150?text=Jumpers'
+      },
+      {
+        'title': 'Accessories',
+        'image': 'https://via.placeholder.com/200x150?text=Accessories'
+      },
     ];
     return Scaffold(
       body: SingleChildScrollView(
@@ -29,7 +38,8 @@ class CollectionsPage extends StatelessWidget {
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 24,
@@ -40,7 +50,8 @@ class CollectionsPage extends StatelessWidget {
                       final collection = collections[index];
                       return GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/collection', arguments: collection['title']);
+                          Navigator.pushNamed(context, '/collection',
+                              arguments: collection['title']);
                         },
                         child: Card(
                           elevation: 2,
@@ -56,7 +67,9 @@ class CollectionsPage extends StatelessWidget {
                                 padding: const EdgeInsets.all(12),
                                 child: Text(
                                   collection['title']!,
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
@@ -94,7 +107,8 @@ class CollectionPage extends StatelessWidget {
                 children: [
                   Text(
                     title ?? 'Collection',
-                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 24),
                   const Text('This is a placeholder for the collection page.'),

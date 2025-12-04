@@ -215,7 +215,8 @@ class AboutFooter extends StatelessWidget {
                           hintText: 'Email address',
                           border: OutlineInputBorder(),
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                         ),
                       ),
                     ),
@@ -223,7 +224,8 @@ class AboutFooter extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF4d2963),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       ),
                       onPressed: () {},
                       child: const Text('SUBSCRIBE'),
@@ -252,7 +254,8 @@ class SocialRow extends StatelessWidget {
         children: [
           Icon(Icons.facebook, color: Colors.grey[700]),
           const SizedBox(width: 16),
-          Icon(Icons.alternate_email, color: Colors.grey[700]), // Twitter alternative
+          Icon(Icons.alternate_email,
+              color: Colors.grey[700]), // Twitter alternative
           const SizedBox(width: 16),
           // Payment icons as placeholders
           Container(
