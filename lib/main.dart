@@ -246,62 +246,58 @@ class FeaturedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-      child: Column(
-        children: [
-          const Text(
-            'ESSENTIAL RANGE - OVER 20% OFF!',
-            style: TextStyle(
-                fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Expanded(
-                child: ProductCard(
-                  title: 'Limited Edition Essential Zip Hoodies',
-                  imageUrl: 'https://via.placeholder.com/400x400?text=Hoodie',
-                  oldPrice: '£20.00',
-                  price: '£14.99',
-                ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: ProductCard(
-                  title: 'Essential T-Shirt',
-                  imageUrl: 'https://via.placeholder.com/400x400?text=T-Shirt',
-                  oldPrice: '£10.00',
-                  price: '£6.99',
-                ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: ProductCard(
-                  title: 'Signature Hoodie',
-                  imageUrl:
-                      'https://via.placeholder.com/400x400?text=Signature+Hoodie',
-                  oldPrice: '£32.99',
-                  price: '£24.99',
-                ),
-              ),
-              SizedBox(width: 24),
-              Expanded(
-                child: ProductCard(
-                  title: 'Portsmouth City Magnet',
-                  imageUrl: 'https://via.placeholder.com/400x400?text=Magnet',
-                  oldPrice: null,
-                  price: '£4.50',
-                ),
-              ),
-            ],
-          ),
-        ],
+    final essentialProducts = [
+      ProductCard(
+        title: 'Essential Zip Hoodie',
+        imageUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
+        oldPrice: '£20.00',
+        price: '£14.99',
       ),
+      ProductCard(
+        title: 'Essential T-Shirt',
+        imageUrl: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+        oldPrice: '£10.00',
+        price: '£6.99',
+      ),
+    ];
+    final signatureProducts = [
+      ProductCard(
+        title: 'Signature Hoodie',
+        imageUrl: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+        oldPrice: null,
+        price: '£32.99',
+      ),
+      ProductCard(
+        title: 'Signature T-Shirt',
+        imageUrl: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
+        oldPrice: null,
+        price: '£14.99',
+      ),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          child: Text('ESSENTIAL RANGE - OVER 20% OFF!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            children: essentialProducts,
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          child: Text('SIGNATURE RANGE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(
+            children: signatureProducts,
+          ),
+        ),
+      ],
     );
   }
 }
