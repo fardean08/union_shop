@@ -14,7 +14,6 @@ class AboutPage extends StatelessWidget {
             Navbar(),
             AboutHero(),
             AboutFooter(),
-            SocialRow(),
           ],
         ),
       ),
