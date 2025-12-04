@@ -353,17 +353,15 @@ class Footer extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 12),
-                  child: TextField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      prefixIcon: Icon(Icons.search, color: Color(0xFF4d2963)),
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                  },
+                  child: const Text(
+                    'About Us',
+                    style: TextStyle(
+                      color: Color(0xFF4d2963),
+                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
