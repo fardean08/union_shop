@@ -91,6 +91,23 @@ class Navbar extends StatelessWidget {
                   ),
                 ),
               );
+            } else if (item == 'Shop') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/collections');
+                  },
+                  child: const Text(
+                    'Shop',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              );
             } else if (item == 'About') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
