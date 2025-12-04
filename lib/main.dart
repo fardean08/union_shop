@@ -382,7 +382,8 @@ class Footer extends StatelessWidget {
                           hintText: 'Email address',
                           border: OutlineInputBorder(),
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                         ),
                       ),
                     ),
@@ -390,7 +391,8 @@ class Footer extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF4d2963),
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       ),
                       onPressed: () {},
                       child: const Text('SUBSCRIBE'),
