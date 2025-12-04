@@ -48,6 +48,46 @@ class Navbar extends StatelessWidget {
   }
 }
 
+class HeroBanner extends StatelessWidget {
+  const HeroBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: Colors.purple[100],
+      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
+      child: Column(
+        children: const [
+          // Large image placeholder
+          SizedBox(
+            height: 180,
+            child: Center(
+              child: Icon(
+                Icons.image,
+                size: 120,
+                color: Colors.purple,
+              ),
+            ),
+          ),
+          SizedBox(height: 24),
+          Text(
+            'Hero Banner',
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 16),
+          Text(
+            'This is a simple static hero banner section.',
+            style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -60,25 +100,7 @@ class HomeScreen extends StatelessWidget {
             // Navbar
             const Navbar(),
             // Hero Banner
-            Container(
-              width: double.infinity,
-              color: Colors.purple[100],
-              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
-              child: Column(
-                children: const [
-                  Text(
-                    'Hero Banner',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'This is a simple static hero banner section.',
-                    style: TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
+            const HeroBanner(),
             // Featured Section Placeholder
             Container(
               width: double.infinity,
