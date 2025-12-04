@@ -22,6 +22,85 @@ class AboutPage extends StatelessWidget {
   }
 }
 
+class Navbar extends StatelessWidget {
+  const Navbar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          const Text(
+            'The UNION',
+            style: TextStyle(
+              color: Color(0xFF4d2963),
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+            ),
+          ),
+          const Spacer(),
+          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net'].map((item) {
+            if (item == 'Home') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: const Text(
+                    'Home',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              );
+            } else if (item == 'About') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                  },
+                  child: const Text(
+                    'About',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  item,
+                  style: const TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }
+          }),
+          const Spacer(),
+          const Icon(Icons.person_outline, color: Colors.black54),
+          const SizedBox(width: 12),
+          const Icon(Icons.shopping_cart_outlined, color: Colors.black54),
+        ],
+      ),
+    );
+  }
+}
+
 class HeroTitle extends StatelessWidget {
   const HeroTitle({super.key});
 

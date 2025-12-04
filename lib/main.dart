@@ -70,7 +70,24 @@ class Navbar extends StatelessWidget {
           ),
           const Spacer(),
           ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net'].map((item) {
-            if (item == 'About') {
+            if (item == 'Home') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: const Text(
+                    'Home',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              );
+            } else if (item == 'About') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: InkWell(
