@@ -60,6 +60,15 @@ class LoginPage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: const Text(
+                        "Don't have an account? Sign Up",
+                        style: TextStyle(fontSize: 16, color: Colors.deepPurple),
+                      ),
+                    ),
                   ],
                 ),
               ),
