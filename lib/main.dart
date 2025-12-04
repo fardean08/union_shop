@@ -334,19 +334,48 @@ class ProductPage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            Navbar(),
+          children: [
+            const Navbar(),
             // Large product image section
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 32),
-              child: Image(
-                image: NetworkImage('https://via.placeholder.com/600x400?text=Product+Image'),
-                width: 600,
-                height: 400,
-                fit: BoxFit.cover,
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: Column(
+                children: [
+                  const Image(
+                    image: NetworkImage('https://via.placeholder.com/600x400?text=Product+Image'),
+                    width: 600,
+                    height: 400,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(height: 24),
+                  // Product details
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Product Title',
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Text(
+                            '£14.99',
+                            style: TextStyle(fontSize: 22, color: Colors.deepPurple, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(width: 16),
+                          Text(
+                            '£20.00',
+                            style: TextStyle(fontSize: 18, color: Colors.grey, decoration: TextDecoration.lineThrough),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            Footer(),
+            const Footer(),
           ],
         ),
       ),
