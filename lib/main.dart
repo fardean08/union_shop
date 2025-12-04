@@ -68,13 +68,18 @@ class Navbar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
-          const Text(
-            'The UNION',
-            style: TextStyle(
-              color: Color(0xFF4d2963),
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 2,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/');
+            },
+            child: const Text(
+              'The UNION',
+              style: TextStyle(
+                color: Color(0xFF4d2963),
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 2,
+              ),
             ),
           ),
           const Spacer(),
