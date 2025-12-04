@@ -342,7 +342,8 @@ class ProductPage extends StatelessWidget {
               child: Column(
                 children: [
                   const Image(
-                    image: NetworkImage('https://via.placeholder.com/600x400?text=Product+Image'),
+                    image: NetworkImage(
+                        'https://via.placeholder.com/600x400?text=Product+Image'),
                     width: 600,
                     height: 400,
                     fit: BoxFit.cover,
@@ -354,19 +355,26 @@ class ProductPage extends StatelessWidget {
                     children: [
                       const Text(
                         'Product Title',
-                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 12),
                       const Row(
                         children: [
                           Text(
                             '£14.99',
-                            style: TextStyle(fontSize: 22, color: Colors.deepPurple, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 22,
+                                color: Colors.deepPurple,
+                                fontWeight: FontWeight.bold),
                           ),
                           SizedBox(width: 16),
                           Text(
                             '£20.00',
-                            style: TextStyle(fontSize: 18, color: Colors.grey, decoration: TextDecoration.lineThrough),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough),
                           ),
                         ],
                       ),
@@ -386,10 +394,12 @@ class ProductPage extends StatelessWidget {
                       DropdownButton<String>(
                         value: 'Colour',
                         items: [
-                          DropdownMenuItem(value: 'Colour', child: Text('Colour')),
+                          DropdownMenuItem(
+                              value: 'Colour', child: Text('Colour')),
                           DropdownMenuItem(value: 'Red', child: Text('Red')),
                           DropdownMenuItem(value: 'Blue', child: Text('Blue')),
-                          DropdownMenuItem(value: 'Green', child: Text('Green')),
+                          DropdownMenuItem(
+                              value: 'Green', child: Text('Green')),
                         ],
                         onChanged: null,
                       ),
@@ -407,7 +417,8 @@ class ProductPage extends StatelessWidget {
                                 Icon(Icons.remove, color: Colors.grey),
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
-                                  child: Text('1', style: TextStyle(fontSize: 16)),
+                                  child:
+                                      Text('1', style: TextStyle(fontSize: 16)),
                                 ),
                                 Icon(Icons.add, color: Colors.grey),
                               ],
@@ -417,13 +428,16 @@ class ProductPage extends StatelessWidget {
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF4d2963),
-                              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 32, vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
                             onPressed: null,
-                            child: Text('Add to Cart', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            child: Text('Add to Cart',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),
