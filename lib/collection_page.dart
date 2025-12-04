@@ -63,58 +63,98 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = [
+    final signatureProducts = [
       {
-        'title': 'Classic Hoodie',
+        'title': 'Signature Hoodie',
         'imageUrl':
             'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
-        'oldPrice': '£25.00',
-        'price': '£19.99',
+        'oldPrice': null,
+        'price': '£32.99',
       },
       {
-        'title': 'Zip Hoodie',
+        'title': 'Signature T-Shirt',
         'imageUrl':
             'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
-        'oldPrice': '£22.00',
-        'price': '£16.99',
+        'oldPrice': null,
+        'price': '£14.99',
       },
+    ];
+    final essentialProducts = [
       {
-        'title': 'Pullover Hoodie',
+        'title': 'Essential Zip Hoodie',
         'imageUrl':
             'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£20.00',
         'price': '£14.99',
       },
       {
-        'title': 'Lightweight Hoodie',
+        'title': 'Essential T-Shirt',
         'imageUrl':
             'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
-        'oldPrice': '£18.00',
-        'price': '£12.99',
+        'oldPrice': '£10.00',
+        'price': '£6.99',
       },
     ];
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: products.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 24,
-          mainAxisSpacing: 24,
-          childAspectRatio: 0.8,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          child: Text('ESSENTIAL RANGE - OVER 20% OFF!',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         ),
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return ProductCard(
-            title: product['title']!,
-            imageUrl: product['imageUrl']!,
-            oldPrice: product['oldPrice']!,
-            price: product['price']!,
-          );
-        },
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: essentialProducts.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 24,
+              mainAxisSpacing: 24,
+              childAspectRatio: 0.8,
+            ),
+            itemBuilder: (context, index) {
+              final product = essentialProducts[index];
+              return ProductCard(
+                title: product['title']!,
+                imageUrl: product['imageUrl']!,
+                oldPrice: product['oldPrice'],
+                price: product['price']!,
+              );
+            },
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          child: Text('SIGNATURE RANGE',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: signatureProducts.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 24,
+              mainAxisSpacing: 24,
+              childAspectRatio: 0.8,
+            ),
+            itemBuilder: (context, index) {
+              final product = signatureProducts[index];
+              return ProductCard(
+                title: product['title']!,
+                imageUrl: product['imageUrl']!,
+                oldPrice: null,
+                price: product['price']!,
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
