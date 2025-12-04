@@ -351,13 +351,13 @@ class ProductPage extends StatelessWidget {
                   // Product details
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Product Title',
                         style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 12),
-                      Row(
+                      const SizedBox(height: 12),
+                      const Row(
                         children: [
                           Text(
                             '£14.99',
@@ -370,7 +370,7 @@ class ProductPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       // Non-functional Dropdowns
                       DropdownButton<String>(
                         value: 'Size',
@@ -382,7 +382,7 @@ class ProductPage extends StatelessWidget {
                         ],
                         onChanged: null,
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       DropdownButton<String>(
                         value: 'Colour',
                         items: [
@@ -392,6 +392,40 @@ class ProductPage extends StatelessWidget {
                           DropdownMenuItem(value: 'Green', child: Text('Green')),
                         ],
                         onChanged: null,
+                      ),
+                      const SizedBox(height: 24),
+                      // Quantity and Add to Cart
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(Icons.remove, color: Colors.grey),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  child: Text('1', style: TextStyle(fontSize: 16)),
+                                ),
+                                Icon(Icons.add, color: Colors.grey),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 24),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF4d2963),
+                              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                            ),
+                            onPressed: null,
+                            child: Text('Add to Cart', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                          ),
+                        ],
                       ),
                     ],
                   ),
