@@ -69,17 +69,38 @@ class Navbar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net']
-              .map((item) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      item,
-                      style: const TextStyle(
-                          color: Colors.black87,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
+          ...['Home', 'Shop', 'The Print Shack', 'SALE!', 'About', 'UPSU.net'].map((item) {
+            if (item == 'About') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/about');
+                  },
+                  child: const Text(
+                    'About',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
-                  )),
+                  ),
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  item,
+                  style: const TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }
+          }),
           const Spacer(),
           const Icon(Icons.person_outline, color: Colors.black54),
           const SizedBox(width: 12),
