@@ -27,7 +27,11 @@ class UnionShopApp extends StatelessWidget {
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
-        '/product': (context) => const ProductPage(),
+        '/product': (context) => const ProductPage(
+              title: '',
+              imageUrl: '',
+              price: '',
+            ),
         '/about': (context) => const AboutPage(),
         '/collections': (context) => const CollectionsPage(),
         '/collection': (context) => const CollectionPage(),
@@ -430,7 +434,18 @@ class HomeScreen extends StatelessWidget {
 }
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({super.key});
+  final String title;
+  final String imageUrl;
+  final String price;
+  final String? oldPrice;
+
+  const ProductPage({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+    required this.price,
+    this.oldPrice,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -444,48 +459,50 @@ class ProductPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 32),
               child: Column(
                 children: [
-                  const Image(
-                    image: NetworkImage(
-                        'https://via.placeholder.com/600x400?text=Product+Image'),
+                  Image.network(
+                    imageUrl,
                     width: 600,
                     height: 400,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const SizedBox.shrink(),
                   ),
                   const SizedBox(height: 24),
                   // Product details
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Product Title',
-                        style: TextStyle(
+                      Text(
+                        title,
+                        style: const TextStyle(
                             fontSize: 28, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 12),
-                      const Row(
+                      Row(
                         children: [
                           Text(
-                            '£14.99',
-                            style: TextStyle(
+                            price,
+                            style: const TextStyle(
                                 fontSize: 22,
                                 color: Colors.deepPurple,
                                 fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(width: 16),
-                          Text(
-                            '£20.00',
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough),
-                          ),
+                          const SizedBox(width: 16),
+                          if (oldPrice != null)
+                            Text(
+                              oldPrice!,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
                         ],
                       ),
                       const SizedBox(height: 24),
                       // Non-functional Dropdowns
                       DropdownButton<String>(
                         value: 'Size',
-                        items: [
+                        items: const [
                           DropdownMenuItem(value: 'Size', child: Text('Size')),
                           DropdownMenuItem(value: 'S', child: Text('S')),
                           DropdownMenuItem(value: 'M', child: Text('M')),
@@ -496,7 +513,7 @@ class ProductPage extends StatelessWidget {
                       const SizedBox(height: 12),
                       DropdownButton<String>(
                         value: 'Colour',
-                        items: [
+                        items: const [
                           DropdownMenuItem(
                               value: 'Colour', child: Text('Colour')),
                           DropdownMenuItem(value: 'Red', child: Text('Red')),
@@ -517,28 +534,28 @@ class ProductPage extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                Icon(Icons.remove, color: Colors.grey),
-                                Padding(
+                                const Icon(Icons.remove, color: Colors.grey),
+                                const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 16),
-                                  child:
-                                      Text('1', style: TextStyle(fontSize: 16)),
+                                  child: Text('1',
+                                      style: TextStyle(fontSize: 16)),
                                 ),
-                                Icon(Icons.add, color: Colors.grey),
+                                const Icon(Icons.add, color: Colors.grey),
                               ],
                             ),
                           ),
-                          SizedBox(width: 24),
+                          const SizedBox(width: 24),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFF4d2963),
-                              padding: EdgeInsets.symmetric(
+                              backgroundColor: const Color(0xFF4d2963),
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 32, vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6),
                               ),
                             ),
                             onPressed: null,
-                            child: Text('Add to Cart',
+                            child: const Text('Add to Cart',
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                           ),
@@ -593,7 +610,17 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductPage(
+              title: title,
+              imageUrl: imageUrl,
+              price: price,
+              oldPrice: oldPrice,
+            ),
+          ),
+        );
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
