@@ -81,8 +81,7 @@ class Navbar extends StatelessWidget {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(
-        children: [
+      child: Row(        children: [
           if (Navigator.canPop(context))
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
@@ -92,14 +91,20 @@ class Navbar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: const Text(
-              'The UNION',
-              style: TextStyle(
-                color: Color(0xFF4d2963),
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-              ),
+            child: Image.network(
+              'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
+              height: 40,
+              errorBuilder: (context, error, stackTrace) {
+                return const Text(
+                  'The UNION',
+                  style: TextStyle(
+                    color: Color(0xFF4d2963),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                  ),
+                );
+              },
             ),
           ),
           const Spacer(),
