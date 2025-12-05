@@ -1,93 +1,211 @@
 import 'package:flutter/material.dart';
+import 'models/product.dart';
+import 'services/product_service.dart';
 
-class CollectionsShirtsPage extends StatelessWidget {
+class CollectionsShirtsPage extends StatefulWidget {
   const CollectionsShirtsPage({super.key});
 
   @override
+  State<CollectionsShirtsPage> createState() => _CollectionsShirtsPageState();
+}
+
+class _CollectionsShirtsPageState extends State<CollectionsShirtsPage> {
+  String sortBy = 'default';
+  bool showOnSaleOnly = false;
+  int currentPage = 0;
+  final int itemsPerPage = 6;
+
+  @override
   Widget build(BuildContext context) {
-    final products = [
-      {
-        'title': 'Classic T-Shirt',
-        'image': 'https://ml.thcdn.com/images/v2/productimg/original/17028758-9155259874746153.jpg?width=960&height=960',
-        'price': '£11.00',
-        'oldPrice': null,
-      },
-      {
-        'title': 'Print Tee',
-        'image': 'https://i5.walmartimages.com/asr/7ffec616-12c7-42df-ad9c-c63164d980b6_1.2eafd147c4ac5e7364d0004c1ae9c423.jpeg',
-        'price': '£12.50',
-        'oldPrice': '£15.00',
-      },
-    ];
+    var products = ProductService.getProductsByCategory('shirts');
+    products = ProductService.filterProducts(
+      products,
+      sortBy: sortBy == 'default' ? null : sortBy,
+      onSaleOnly: showOnSaleOnly,
+    );
+
+    final totalPages = (products.length / itemsPerPage).ceil();
+    final paginatedProducts = ProductService.paginateProducts(
+      products,
+      currentPage,
+      itemsPerPage,
+    );
 
     return Scaffold(
-      appBar: AppBar(title: const Text('T-Shirts'), backgroundColor: const Color(0xFF4d2963)),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: LayoutBuilder(builder: (context, constraints) {
-          final width = constraints.maxWidth;
-          int crossAxis = 2;
-          if (width > 1000) crossAxis = 4;
-          else if (width > 700) crossAxis = 3;
-
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxis,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 0.8,
+      appBar: AppBar(
+        title: const Text('T-Shirts'),
+        backgroundColor: const Color(0xFF4d2963),
+      ),
+      body: Column(
+        children: [
+          // Filters and Sort
+          Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.grey[100],
+            child: Row(
+              children: [
+                Expanded(
+                  child: DropdownButton<String>(
+                    value: sortBy,
+                    isExpanded: true,
+                    items: const [
+                      DropdownMenuItem(value: 'default', child: Text('Default')),
+                      DropdownMenuItem(value: 'price_low', child: Text('Price: Low to High')),
+                      DropdownMenuItem(value: 'price_high', child: Text('Price: High to Low')),
+                      DropdownMenuItem(value: 'name', child: Text('Name A-Z')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        sortBy = value ?? 'default';
+                        currentPage = 0;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+                FilterChip(
+                  label: const Text('On Sale'),
+                  selected: showOnSaleOnly,
+                  onSelected: (selected) {
+                    setState(() {
+                      showOnSaleOnly = selected;
+                      currentPage = 0;
+                    });
+                  },
+                ),
+              ],
             ),
-            itemCount: products.length,
-            itemBuilder: (context, i) {
-              final p = products[i];
-              return InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/product', arguments: {
-                    'title': p['title'],
-                    'imageUrl': p['image'],
-                    'price': p['price'],
-                    'oldPrice': p['oldPrice'],
-                  });
-                },
-                child: Card(
-                  elevation: 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Image.network(
-                          p['image'] as String,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorBuilder: (c, e, s) => Container(color: Colors.grey[300]),
+          ),
+          // Products Grid
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: LayoutBuilder(builder: (context, constraints) {
+                final width = constraints.maxWidth;
+                int crossAxis = 2;
+                if (width > 1000) crossAxis = 4;
+                else if (width > 700) crossAxis = 3;
+
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxis,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: paginatedProducts.length,
+                  itemBuilder: (context, i) {
+                    final p = paginatedProducts[i];
+                    return _buildProductCard(p);
+                  },
+                );
+              }),
+            ),
+          ),
+          // Pagination
+          if (totalPages > 1)
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.chevron_left),
+                    onPressed: currentPage > 0
+                        ? () => setState(() => currentPage--)
+                        : null,
+                  ),
+                  Text('Page ${currentPage + 1} of $totalPages'),
+                  IconButton(
+                    icon: const Icon(Icons.chevron_right),
+                    onPressed: currentPage < totalPages - 1
+                        ? () => setState(() => currentPage++)
+                        : null,
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductCard(Product p) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, '/product', arguments: {
+          'title': p.title,
+          'imageUrl': p.imageUrl,
+          'price': p.priceString,
+          'oldPrice': p.oldPriceString,
+        });
+      },
+      child: Card(
+        elevation: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Image.network(
+                    p.imageUrl,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (c, e, s) => Container(color: Colors.grey[300]),
+                  ),
+                  if (p.isOnSale)
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Text(
+                          'SALE',
+                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(p['title'] as String, style: const TextStyle(fontWeight: FontWeight.w600)),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                if (p['oldPrice'] != null)
-                                  Text(p['oldPrice'] as String,
-                                      style: const TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey)),
-                                if (p['oldPrice'] != null) const SizedBox(width: 6),
-                                Text(p['price'] as String, style: const TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ],
+                    ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(p.title, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      if (p.oldPriceString != null)
+                        Text(
+                          p.oldPriceString!,
+                          style: const TextStyle(
+                            decoration: TextDecoration.lineThrough,
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      if (p.oldPriceString != null) const SizedBox(width: 6),
+                      Text(
+                        p.priceString,
+                        style: const TextStyle(
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
-                ),
-              );
-            },
-          );
-        }),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
