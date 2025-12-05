@@ -129,16 +129,10 @@ class _CollectionsAccessoriesPageState extends State<CollectionsAccessoriesPage>
       ),
     );
   }
-
   Widget _buildProductCard(Product p) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/product', arguments: {
-          'title': p.title,
-          'imageUrl': p.imageUrl,
-          'price': p.priceString,
-          'oldPrice': p.oldPriceString,
-        });
+        Navigator.pushNamed(context, '/product', arguments: p);
       },
       child: Card(
         elevation: 2,

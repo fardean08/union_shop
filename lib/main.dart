@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/collections_page.dart';
@@ -10,9 +11,15 @@ import 'package:union_shop/login_page.dart';
 import 'package:union_shop/signup_page.dart';
 import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/cart_provider.dart';
+import 'package:union_shop/models/product.dart';
 
 void main() {
-  runApp(const UnionShopApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => CartProvider(),
+      child: const UnionShopApp(),
+    ),
+  );
 }
 
 class UnionShopApp extends StatelessWidget {
@@ -27,18 +34,14 @@ class UnionShopApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
       home: const HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
-      initialRoute: '/',      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
+      // By default, the app starts at the '/' route, which is the HomeScreen      initialRoute: '/',
       routes: {
         '/product': (context) {
-          final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
-          return ProductPage(
-            title: args?['title'] ?? '',
-            imageUrl: args?['imageUrl'] ?? '',
-            price: args?['price'] ?? '',
-            oldPrice: args?['oldPrice'] as String?,
-          );
+          final args = ModalRoute.of(context)?.settings.arguments;
+          if (args is Product) {
+            return ProductPage(product: args);
+          }
+          return const ProductPage();
         },
         '/about': (context) => const AboutPage(),
         '/collections': (context) => const CollectionsPage(),
@@ -325,22 +328,25 @@ class FeaturedSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: essentialProducts.map((product) {
-              return Expanded(
-                child: Padding(
+              return Expanded(                child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                            title: product['title'] as String,
-                            imageUrl: product['imageUrl'] as String,
-                            price: product['price'] as String,
-                            oldPrice: product['oldPrice'] as String?,
-                          ),
-                        ),
+                      // Create a Product object for navigation
+                      final productObj = Product(
+                        id: product['title'] as String,
+                        title: product['title'] as String,
+                        imageUrl: product['imageUrl'] as String,
+                        price: double.parse((product['price'] as String).replaceAll('£', '')),
+                        oldPrice: product['oldPrice'] != null 
+                            ? double.parse((product['oldPrice'] as String).replaceAll('£', ''))
+                            : null,
+                        category: 'featured',
+                        sizes: ['S', 'M', 'L', 'XL'],
+                        colors: ['Black', 'White', 'Navy'],
+                        isOnSale: product['oldPrice'] != null,
                       );
+                      Navigator.pushNamed(context, '/product', arguments: productObj);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -427,22 +433,23 @@ class FeaturedSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: signatureProducts.map((product) {
-              return Expanded(
-                child: Padding(
+              return Expanded(                child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductPage(
-                            title: product['title'] as String,
-                            imageUrl: product['imageUrl'] as String,
-                            price: product['price'] as String,
-                            oldPrice: null,
-                          ),
-                        ),
+                      // Create a Product object for navigation
+                      final productObj = Product(
+                        id: product['title'] as String,
+                        title: product['title'] as String,
+                        imageUrl: product['imageUrl'] as String,
+                        price: double.parse((product['price'] as String).replaceAll('£', '')),
+                        oldPrice: null,
+                        category: 'signature',
+                        sizes: ['S', 'M', 'L', 'XL'],
+                        colors: ['Black', 'White', 'Navy'],
+                        isOnSale: false,
                       );
+                      Navigator.pushNamed(context, '/product', arguments: productObj);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -630,279 +637,6 @@ class HomeScreen extends StatelessWidget {
             Footer(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ProductPage extends StatefulWidget {
-  final String title;
-  final String imageUrl;
-  final String price;
-  final String? oldPrice;
-
-  const ProductPage({
-    super.key,
-    required this.title,
-    required this.imageUrl,
-    required this.price,
-    this.oldPrice,
-  });
-
-  @override
-  State<ProductPage> createState() => _ProductPageState();
-}
-
-class _ProductPageState extends State<ProductPage> {
-  String selectedSize = 'M';
-  String selectedColour = 'Black';
-  int quantity = 1;
-  final cartProvider = CartProvider();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Navbar(),
-            // Large product image section
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 32),
-              child: Column(
-                children: [
-                  Image.network(
-                    widget.imageUrl,
-                    width: 600,
-                    height: 400,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const SizedBox.shrink(),
-                  ),
-                  const SizedBox(height: 24),
-                  // Product details
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.title,
-                        style: const TextStyle(
-                            fontSize: 28, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Text(
-                            widget.price,
-                            style: const TextStyle(
-                                fontSize: 22,
-                                color: Colors.deepPurple,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(width: 16),
-                          if (widget.oldPrice != null)
-                            Text(
-                              widget.oldPrice!,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      // Size selector
-                      DropdownButton<String>(
-                        value: selectedSize,
-                        items: const [
-                          DropdownMenuItem(value: 'S', child: Text('Small')),
-                          DropdownMenuItem(value: 'M', child: Text('Medium')),
-                          DropdownMenuItem(value: 'L', child: Text('Large')),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            selectedSize = value ?? 'M';
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      // Colour selector
-                      DropdownButton<String>(
-                        value: selectedColour,
-                        items: const [
-                          DropdownMenuItem(
-                              value: 'Black', child: Text('Black')),
-                          DropdownMenuItem(
-                              value: 'White', child: Text('White')),
-                          DropdownMenuItem(value: 'Grey', child: Text('Grey')),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            selectedColour = value ?? 'Black';
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      // Quantity selector
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              setState(() {
-                                if (quantity > 1) quantity--;
-                              });
-                            },
-                          ),
-                          Text('$quantity',
-                              style: const TextStyle(fontSize: 18)),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              setState(() {
-                                quantity++;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: () {
-                          cartProvider.addItem(CartItem(
-                            title: widget.title,
-                            imageUrl: widget.imageUrl,
-                            price: widget.price,
-                            oldPrice: widget.oldPrice,
-                            size: selectedSize,
-                            colour: selectedColour,
-                            quantity: quantity,
-                          ));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Added to cart!')),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.deepPurple,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 48, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        ),
-                        child: const Text('Add to Cart',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Product description section
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Product Description',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    'This is a placeholder for the product description. Here you can add details about the product, materials, sizing, care instructions, and more.',
-                    style: TextStyle(fontSize: 15, color: Colors.black87),
-                  ),
-                ],
-              ),
-            ),
-            const Footer(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final String title;
-  final String price;
-  final String imageUrl;
-  final String? oldPrice;
-
-  const ProductCard({
-    super.key,
-    required this.title,
-    required this.price,
-    required this.imageUrl,
-    this.oldPrice,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductPage(
-              title: title,
-              imageUrl: imageUrl,
-              price: price,
-              oldPrice: oldPrice,
-            ),
-          ),
-        );
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AspectRatio(
-            aspectRatio: 1.2,
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-            maxLines: 2,
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              if (oldPrice != null)
-                Text(
-                  oldPrice!,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey,
-                    decoration: TextDecoration.lineThrough,
-                  ),
-                ),
-              if (oldPrice != null) const SizedBox(width: 8),
-              Text(
-                price,
-                style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

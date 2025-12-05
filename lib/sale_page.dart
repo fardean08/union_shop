@@ -33,8 +33,8 @@ class SaleBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
       color: Colors.white,
       child: Column(
-        children: [
-          const Text(
+        children: const [
+          Text(
             'SALE',
             style: TextStyle(
               color: Color(0xFF333333),
@@ -43,8 +43,8 @@ class SaleBanner extends StatelessWidget {
               letterSpacing: 2,
             ),
           ),
-          const SizedBox(height: 16),
-          const Text(
+          SizedBox(height: 16),
+          Text(
             'Don\'t miss out! Get yours before they\'re all gone!',
             style: TextStyle(
               color: Color(0xFF666666),
@@ -53,8 +53,8 @@ class SaleBanner extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
-          const Text(
+          SizedBox(height: 32),
+          Text(
             'All prices shown are inclusive of the discount 🧾',
             style: TextStyle(
               color: Color(0xFF666666),
@@ -154,6 +154,81 @@ class SaleProductGrid extends StatelessWidget {
             price: product['price']!,
           );
         },
+      ),
+    );
+  }
+}
+
+class ProductCard extends StatelessWidget {
+  final String title;
+  final String price;
+  final String imageUrl;
+  final String? oldPrice;
+
+  const ProductCard({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.imageUrl,
+    this.oldPrice,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        // Navigate to product page (placeholder - would need Product object)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Product details coming soon!')),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Image.network(
+              imageUrl,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey[300],
+                  child: const Center(
+                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                  ),
+                );
+              },
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+            maxLines: 2,
+          ),
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              if (oldPrice != null)
+                Text(
+                  oldPrice!,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                ),
+              if (oldPrice != null) const SizedBox(width: 8),
+              Text(
+                price,
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
