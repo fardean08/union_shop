@@ -762,16 +762,25 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ),                    ],
                   ),
 
-                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 20.0,
+                      desktop: 24.0,
+                    ),
+                  ),
 
                   // Add to cart button
                   SizedBox(
                     width: double.infinity,
-                    height: 50,
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 48.0,
+                      desktop: 50.0,
+                    ),
                     child: ElevatedButton(
                       onPressed: () => addToCart(context),
                       style: ElevatedButton.styleFrom(
@@ -780,10 +789,14 @@ class _ProductPageState extends State<ProductPage> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Add to cart',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: ResponsiveHelper.fontSize(
+                            context: context,
+                            mobile: 15.0,
+                            desktop: 16.0,
+                          ),
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
@@ -791,11 +804,24 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 24),                  // Product description
-                  const Text(
+                  SizedBox(
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 20.0,
+                      desktop: 24.0,
+                    ),
+                  ),
+
+                  // Product description
+                  Text(
                     'Description',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: ResponsiveHelper.fontSize(
+                        context: context,
+                        mobile: 16.0,
+                        tablet: 17.0,
+                        desktop: 18.0,
+                      ),
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                     ),
@@ -803,8 +829,12 @@ class _ProductPageState extends State<ProductPage> {
                   const SizedBox(height: 8),
                   Text(
                     product?.productDescription ?? 'Quality apparel from The UNION Shop. Designed for comfort, style, and durability. Perfect for students and anyone looking for great everyday wear.',
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: ResponsiveHelper.fontSize(
+                        context: context,
+                        mobile: 14.0,
+                        desktop: 16.0,
+                      ),
                       color: Colors.grey,
                       height: 1.5,
                     ),
