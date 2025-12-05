@@ -110,9 +110,8 @@ class Navbar extends StatelessWidget {
                 );
               },
             ),
-          ),
-          const Spacer(),
-          ...['Home', 'Shop', 'SALE!', 'About'].map((item) {
+          ),          const Spacer(),
+          ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -139,6 +138,22 @@ class Navbar extends StatelessWidget {
                   },
                   child: const Text(
                     'Shop',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),                ),
+              );
+            } else if (item == 'Print Shack') {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/print-shack');
+                  },
+                  child: const Text(
+                    'Print Shack',
                     style: TextStyle(
                       color: Colors.black87,
                       fontSize: 16,
