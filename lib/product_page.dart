@@ -845,34 +845,76 @@ class _ProductPageState extends State<ProductPage> {
             Container(
               width: double.infinity,
               color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.value(
+                  context: context,
+                  mobile: 16.0,
+                  desktop: 24.0,
+                ),
+              ),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        '© 2025 The UNION Shop',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
+                  isMobile
+                      ? Column(
+                          children: [
+                            Text(
+                              '© 2025 The UNION Shop',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: ResponsiveHelper.fontSize(
+                                  context: context,
+                                  mobile: 12.0,
+                                  desktop: 14.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Quality Apparel & Accessories',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: ResponsiveHelper.fontSize(
+                                  context: context,
+                                  mobile: 12.0,
+                                  desktop: 14.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '© 2025 The UNION Shop',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: ResponsiveHelper.fontSize(
+                                  context: context,
+                                  mobile: 12.0,
+                                  desktop: 14.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            const Text(
+                              '•',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            const SizedBox(width: 24),
+                            Text(
+                              'Quality Apparel & Accessories',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: ResponsiveHelper.fontSize(
+                                  context: context,
+                                  mobile: 12.0,
+                                  desktop: 14.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(width: 24),
-                      Text(
-                        '•',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      SizedBox(width: 24),
-                      Text(
-                        'Quality Apparel & Accessories',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),],
