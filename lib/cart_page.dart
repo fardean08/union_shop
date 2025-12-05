@@ -91,13 +91,17 @@ class _CartPageState extends State<CartPage> {
                   );
                 },
               ),
-            ),
-            const SizedBox(width: 16),
-            const Text(
+            ),            const SizedBox(width: 16),
+            Text(
               'Your cart',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 24,
+                fontSize: ResponsiveHelper.fontSize(
+                  context: context,
+                  mobile: 18.0,
+                  tablet: 20.0,
+                  desktop: 24.0,
+                ),
                 fontWeight: FontWeight.bold,
               ),
             ),
