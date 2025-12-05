@@ -602,45 +602,46 @@ class _HeroBannerState extends State<HeroBanner> {
                   ),
                 ],
               );
-            },
-          ),
-          // Navigation arrows
-          Positioned(
-            left: 16,
-            top: 0,
-            bottom: 0,
-            child: Center(
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 32),
-                onPressed: () {
-                  final prevPage = (_currentPage - 1 + _slides.length) % _slides.length;
-                  _pageController.animateToPage(
-                    prevPage,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
+            },          ),
+          // Navigation arrows (hide on mobile)
+          if (!ResponsiveHelper.isMobile(context))
+            Positioned(
+              left: 16,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 32),
+                  onPressed: () {
+                    final prevPage = (_currentPage - 1 + _slides.length) % _slides.length;
+                    _pageController.animateToPage(
+                      prevPage,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          Positioned(
-            right: 16,
-            top: 0,
-            bottom: 0,
-            child: Center(
-              child: IconButton(
-                icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 32),
-                onPressed: () {
-                  final nextPage = (_currentPage + 1) % _slides.length;
-                  _pageController.animateToPage(
-                    nextPage,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                  );
-                },
+          if (!ResponsiveHelper.isMobile(context))
+            Positioned(
+              right: 16,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 32),
+                  onPressed: () {
+                    final nextPage = (_currentPage + 1) % _slides.length;
+                    _pageController.animateToPage(
+                      nextPage,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
               ),
             ),
-          ),
           // Dot indicators
           Positioned(
             bottom: 16,
