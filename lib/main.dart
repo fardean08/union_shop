@@ -468,11 +468,17 @@ class _HeroBannerState extends State<HeroBanner> {
     _pageController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
+    final bannerHeight = ResponsiveHelper.value(
+      context: context,
+      mobile: 200.0,
+      tablet: 240.0,
+      desktop: 280.0,
+    );
+    
     return SizedBox(
-      height: 280,
+      height: bannerHeight,
       child: Stack(
         children: [
           // PageView for slides
@@ -491,7 +497,7 @@ class _HeroBannerState extends State<HeroBanner> {
                   // Background image
                   Container(
                     width: double.infinity,
-                    height: 280,
+                    height: bannerHeight,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(slide['imageUrl'] as String),
@@ -502,38 +508,69 @@ class _HeroBannerState extends State<HeroBanner> {
                   // Dark overlay
                   Container(
                     width: double.infinity,
-                    height: 280,
+                    height: bannerHeight,
                     color: Colors.black.withOpacity(0.3),
-                  ),
-                  // Content
+                  ),                  // Content
                   SizedBox(
                     width: double.infinity,
-                    height: 280,
+                    height: bannerHeight,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
+                      children: [                        Text(
                           slide['title'] as String,
-                          style: const TextStyle(
-                            fontSize: 38,
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 24.0,
+                              tablet: 30.0,
+                              desktop: 38.0,
+                            ),
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(
+                          height: ResponsiveHelper.spacing(
+                            context,
+                            mobile: 8.0,
+                            tablet: 10.0,
+                            desktop: 12.0,
+                          ),
+                        ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: ResponsiveHelper.value(
+                              context: context,
+                              mobile: 16.0,
+                              tablet: 20.0,
+                              desktop: 24.0,
+                            ),
+                          ),
                           child: Text(
                             slide['description'] as String,
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: TextStyle(
+                              fontSize: ResponsiveHelper.fontSize(
+                                context: context,
+                                mobile: 14.0,
+                                tablet: 16.0,
+                                desktop: 18.0,
+                              ),
                               color: Colors.white,
                             ),
                             textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SizedBox(height: 18),
+                        SizedBox(
+                          height: ResponsiveHelper.spacing(
+                            context,
+                            mobile: 12.0,
+                            tablet: 15.0,
+                            desktop: 18.0,
+                          ),
+                        ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
