@@ -206,66 +206,216 @@ class Navbar extends StatelessWidget {
   }
 }
 
-class HeroBanner extends StatelessWidget {
+class HeroBanner extends StatefulWidget {
   const HeroBanner({super.key});
 
   @override
+  State<HeroBanner> createState() => _HeroBannerState();
+}
+
+class _HeroBannerState extends State<HeroBanner> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  
+  final List<Map<String, dynamic>> _slides = [
+    {
+      'title': 'Shop Our Collections',
+      'description': 'Explore our full range of hoodies, t-shirts, and accessories',
+      'buttonText': 'SHOP NOW',
+      'route': '/collections',
+      'imageUrl': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      'title': 'SALE! Up to 20% OFF',
+      'description': 'Essential range now on sale - grab yours while stock lasts!',
+      'buttonText': 'VIEW SALE',
+      'route': '/sale',
+      'imageUrl': 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80',
+    },
+    {
+      'title': 'The Print Shack',
+      'description': "Let's create something uniquely you with our personalisation service — From £3 for one line of text!",
+      'buttonText': 'FIND OUT MORE',
+      'route': '/collections',
+      'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80',
+    },
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Auto-play carousel
+    Future.delayed(const Duration(seconds: 5), _autoPlay);
+  }
+
+  void _autoPlay() {
+    if (mounted) {
+      final nextPage = (_currentPage + 1) % _slides.length;
+      _pageController.animateToPage(
+        nextPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+      Future.delayed(const Duration(seconds: 5), _autoPlay);
+    }
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: 280,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(
-                  'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80'),
-              fit: BoxFit.cover,
+    return SizedBox(
+      height: 280,
+      child: Stack(
+        children: [
+          // PageView for slides
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            itemCount: _slides.length,
+            itemBuilder: (context, index) {
+              final slide = _slides[index];
+              return Stack(
+                children: [
+                  // Background image
+                  Container(
+                    width: double.infinity,
+                    height: 280,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(slide['imageUrl'] as String),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  // Dark overlay
+                  Container(
+                    width: double.infinity,
+                    height: 280,
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                  // Content
+                  SizedBox(
+                    width: double.infinity,
+                    height: 280,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          slide['title'] as String,
+                          style: const TextStyle(
+                            fontSize: 38,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 12),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Text(
+                            slide['description'] as String,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        const SizedBox(height: 18),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF4d2963),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 28,
+                              vertical: 12,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, slide['route'] as String);
+                          },
+                          child: Text(
+                            slide['buttonText'] as String,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+          // Navigation arrows
+          Positioned(
+            left: 16,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 32),
+                onPressed: () {
+                  final prevPage = (_currentPage - 1 + _slides.length) % _slides.length;
+                  _pageController.animateToPage(
+                    prevPage,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        Container(
-          width: double.infinity,
-          height: 280,
-          color: Colors.black.withOpacity(0.3),
-        ),
-        SizedBox(
-          width: double.infinity,
-          height: 280,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'The Print Shack',
-                style: TextStyle(
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-                textAlign: TextAlign.center,
+          Positioned(
+            right: 16,
+            top: 0,
+            bottom: 0,
+            child: Center(
+              child: IconButton(
+                icon: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 32),
+                onPressed: () {
+                  final nextPage = (_currentPage + 1) % _slides.length;
+                  _pageController.animateToPage(
+                    nextPage,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                },
               ),
-              const SizedBox(height: 12),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  "Let's create something uniquely you with our personalisation service — From £3 for one line of text!",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: 18),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF4d2963),
-                  padding: EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-                ),
-                onPressed: null,
-                child: const Text('FIND OUT MORE',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+          // Dot indicators
+          Positioned(
+            bottom: 16,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(_slides.length, (index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: _currentPage == index ? 24 : 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: _currentPage == index
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
