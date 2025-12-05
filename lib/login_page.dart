@@ -48,7 +48,9 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 32),
                     ElevatedButton(
                       onPressed: () {
-                        // Add login logic here or leave empty for now
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Login button pressed')),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF4d2963),
@@ -64,6 +66,10 @@ class LoginPage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Sign Up button pressed')),
+                        );
                         Navigator.pushNamed(context, '/signup');
                       },
                       child: const Text(
