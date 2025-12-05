@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'models/cart_variant.dart';
 import 'cart_provider.dart';
 
 class PrintShackPage extends StatefulWidget {
@@ -524,19 +525,19 @@ class _PrintShackPageState extends State<PrintShackPage> {
                                   ),
                                 );
                                 return;
-                              }
-
-                              // Add to cart
+                              }                              // Add to cart
                               final cart = Provider.of<CartProvider>(context, listen: false);
-                              cart.addItem(CartItem(
-                                title: 'Personalisation - $_selectedLines',
-                                imageUrl: 'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                              cart.addItem(
+                                productId: 'personalisation-${_selectedLines}',
+                                name: 'Personalisation - $_selectedLines',
+                                image: 'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
                                 price: '£3.00',
-                                oldPrice: null,
-                                size: _selectedLines,
-                                colour: 'Text: ${_line1Controller.text}',
                                 quantity: _quantity,
-                              ));
+                                variant: CartVariant(
+                                  size: _selectedLines,
+                                  colour: 'Text: ${_line1Controller.text}',
+                                ),
+                              );
 
                               // Show success message
                               ScaffoldMessenger.of(context).showSnackBar(
