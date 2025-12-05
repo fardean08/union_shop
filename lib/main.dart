@@ -12,6 +12,7 @@ import 'package:union_shop/signup_page.dart';
 import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/cart_provider.dart';
 import 'package:union_shop/print_shack_page.dart';
+import 'package:union_shop/search_page.dart';
 import 'package:union_shop/models/product.dart';
 
 void main() {
@@ -49,11 +50,17 @@ class UnionShopApp extends StatelessWidget {
         '/collections/shirts': (context) => const CollectionsShirtsPage(),
         '/collections/hoodies': (context) => const CollectionsHoodiesPage(),
         '/collections/accessories': (context) => const CollectionsAccessoriesPage(),
-        '/collection': (context) => const CollectionsPage(),        '/sale': (context) => const SalePage(),
-        '/login': (context) => const LoginPage(),
+        '/collection': (context) => const CollectionsPage(),        '/sale': (context) => const SalePage(),        '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/cart': (context) => const CartPage(),
         '/print-shack': (context) => const PrintShackPage(),
+        '/search': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments;
+          if (args is String) {
+            return SearchPage(initialQuery: args);
+          }
+          return const SearchPage();
+        },
       },
     );
   }
