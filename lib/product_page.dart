@@ -17,6 +17,14 @@ class _ProductPageState extends State<ProductPage> {
   String? selectedColour;
   int quantity = 1;
 
+  @override
+  void initState() {
+    super.initState();
+    // Set default values based on product or use defaults
+    selectedSize = widget.product?.sizes.first ?? 'L';
+    selectedColour = widget.product?.colors.first ?? 'Baby Pink';
+  }
+
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
@@ -301,154 +309,192 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ],
                     ],
+                  ),                  const SizedBox(height: 8),
+                  
+                  const Text(
+                    'Tax included.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
                   ),
 
                   const SizedBox(height: 24),
 
-                  // Size selection
-                  if (product?.sizes.isNotEmpty ?? false) ...[
-                    const Text(
-                      'Size',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: product!.sizes.map((size) {
-                        final isSelected = selectedSize == size;
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedSize = size;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isSelected ? const Color(0xFF4d2963) : Colors.white,
-                              border: Border.all(
-                                color: isSelected ? const Color(0xFF4d2963) : Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              size,
+                  // Color, Size and Quantity Row
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Color Dropdown
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Color',
                               style: TextStyle(
-                                color: isSelected ? Colors.white : Colors.black,
-                                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 24),
-                  ],
-
-                  // Colour selection
-                  if (product?.colors.isNotEmpty ?? false) ...[
-                    const Text(
-                      'Colour',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                            const SizedBox(height: 8),
+                            Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade300),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: selectedColour,
+                                  isExpanded: true,
+                                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                                  items: (product?.colors ?? ['Black', 'White', 'Navy']).map((colour) {
+                                    return DropdownMenuItem(
+                                      value: colour,
+                                      child: Text(colour),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedColour = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: product!.colors.map((colour) {
-                        final isSelected = selectedColour == colour;
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedColour = colour;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: isSelected ? const Color(0xFF4d2963) : Colors.white,
-                              border: Border.all(
-                                color: isSelected ? const Color(0xFF4d2963) : Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              colour,
+                      const SizedBox(width: 16),
+                      // Size Dropdown
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Size',
                               style: TextStyle(
-                                color: isSelected ? Colors.white : Colors.black,
-                                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    const SizedBox(height: 24),
-                  ],
-
-                  // Quantity selector
-                  const Text(
-                    'Quantity',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.remove, size: 18),
-                          onPressed: () {
-                            if (quantity > 1) {
-                              setState(() {
-                                quantity--;
-                              });
-                            }
-                          },
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text(
-                            '$quantity',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                            const SizedBox(height: 8),
+                            Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade300),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: selectedSize,
+                                  isExpanded: true,
+                                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                                  items: (product?.sizes ?? ['S', 'M', 'L', 'XL']).map((size) {
+                                    return DropdownMenuItem(
+                                      value: size,
+                                      child: Text(size),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedSize = value;
+                                    });
+                                  },
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.add, size: 18),
-                          onPressed: () {
-                            setState(() {
-                              quantity++;
-                            });
-                          },
+                      ),
+                      const SizedBox(width: 16),
+                      // Quantity Input
+                      SizedBox(
+                        width: 120,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Quantity',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade300),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        '$quantity',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              quantity++;
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                left: BorderSide(color: Colors.grey.shade300),
+                                                bottom: BorderSide(color: Colors.grey.shade300),
+                                              ),
+                                            ),
+                                            child: const Icon(Icons.arrow_drop_up, size: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            if (quantity > 1) {
+                                              setState(() {
+                                                quantity--;
+                                              });
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                left: BorderSide(color: Colors.grey.shade300),
+                                              ),
+                                            ),
+                                            child: const Icon(Icons.arrow_drop_down, size: 20),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
 
                   const SizedBox(height: 24),
