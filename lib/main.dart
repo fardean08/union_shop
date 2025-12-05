@@ -15,6 +15,7 @@ import 'package:union_shop/print_shack_page.dart';
 import 'package:union_shop/search_page.dart';
 import 'package:union_shop/models/product.dart';
 import 'package:union_shop/utils/responsive.dart';
+import 'package:union_shop/widgets/mobile_drawer.dart';
 
 void main() {
   runApp(
@@ -106,29 +107,66 @@ class Navbar extends StatelessWidget {
   const Navbar({super.key});
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveHelper.isMobile(context);
+    
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(        children: [
+      child: Row(
+        children: [
+          // Back button (if applicable)
           if (Navigator.canPop(context))
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
               onPressed: () => Navigator.pop(context),
-            ),          GestureDetector(
+            ),
+          
+          // Hamburger menu for mobile
+          if (isMobile)
+            Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.menu, color: Color(0xFF4d2963)),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+            ),
+            // Logo
+          GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
             child: SizedBox(
-              height: 50,
+              height: ResponsiveHelper.value(
+                context: context,
+                mobile: 35.0,
+                tablet: 40.0,
+                desktop: 50.0,
+              ),
               child: Image.network(
                 'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
-                height: 50,
+                height: ResponsiveHelper.value(
+                  context: context,
+                  mobile: 35.0,
+                  tablet: 40.0,
+                  desktop: 50.0,
+                ),
                 fit: BoxFit.contain,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return SizedBox(
-                    height: 50,
-                    width: 180,
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 35.0,
+                      tablet: 40.0,
+                      desktop: 50.0,
+                    ),
+                    width: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 120.0,
+                      tablet: 150.0,
+                      desktop: 180.0,
+                    ),
                     child: Center(
                       child: CircularProgressIndicator(
                         value: loadingProgress.expectedTotalBytes != null
@@ -143,13 +181,18 @@ class Navbar extends StatelessWidget {
                 },
                 errorBuilder: (context, error, stackTrace) {
                   return RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       children: [
                         TextSpan(
                           text: 'The ',
                           style: TextStyle(
-                            color: Color(0xFF4d2963),
-                            fontSize: 32,
+                            color: const Color(0xFF4d2963),
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 20.0,
+                              tablet: 26.0,
+                              desktop: 32.0,
+                            ),
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.italic,
                             fontFamily: 'cursive',
@@ -158,8 +201,13 @@ class Navbar extends StatelessWidget {
                         TextSpan(
                           text: 'UNION',
                           style: TextStyle(
-                            color: Color(0xFF4d2963),
-                            fontSize: 32,
+                            color: const Color(0xFF4d2963),
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 20.0,
+                              tablet: 26.0,
+                              desktop: 32.0,
+                            ),
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.5,
                           ),
@@ -172,111 +220,124 @@ class Navbar extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
-            if (item == 'Home') {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                  child: const Text(
-                    'Home',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+          
+          // Desktop navigation menu
+          if (!isMobile)
+            ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
+              if (item == 'Home') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: const Text(
+                      'Home',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              );
-            } else if (item == 'Shop') {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/collections');
-                  },
-                  child: const Text(
-                    'Shop',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),                ),
-              );
-            } else if (item == 'Print Shack') {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/print-shack');
-                  },
-                  child: const Text(
-                    'Print Shack',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                );
+              } else if (item == 'Shop') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/collections');
+                    },
+                    child: const Text(
+                      'Shop',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              );
-            } else if (item == 'SALE!') {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/sale');
-                  },
-                  child: const Text(
-                    'SALE!',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                );
+              } else if (item == 'Print Shack') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/print-shack');
+                    },
+                    child: const Text(
+                      'Print Shack',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              );
-            } else if (item == 'About') {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/about');
-                  },
-                  child: const Text(
-                    'About',
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                );
+              } else if (item == 'SALE!') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/sale');
+                    },
+                    child: const Text(
+                      'SALE!',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-              );            } else {
-              return const SizedBox.shrink();
-            }
-          }),
-          const Spacer(),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/search');
-            },
-            child: const Icon(Icons.search,
-                color: Colors.black54, size: 28),
-          ),
-          const SizedBox(width: 18),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            child: const Icon(Icons.person_outline,
-                color: Colors.black54, size: 28),
-          ),
-          const SizedBox(width: 18),
+                );
+              } else if (item == 'About') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/about');
+                    },
+                    child: const Text(
+                      'About',
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+          
+          if (!isMobile) const Spacer(),
+            // Search icon (desktop only)
+          if (!isMobile)
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              child: const Icon(Icons.search,
+                  color: Colors.black54, size: 28),
+            ),
+          if (!isMobile) const SizedBox(width: 18),
+          
+          // Login icon (desktop only)
+          if (!isMobile)
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              child: const Icon(Icons.person_outline,
+                  color: Colors.black54, size: 28),
+            ),
+          if (!isMobile) const SizedBox(width: 18),
+          
+          // Cart icon (always visible)
           Consumer<CartProvider>(
             builder: (context, cart, child) {
               return InkWell(
@@ -286,27 +347,52 @@ class Navbar extends StatelessWidget {
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    const Icon(Icons.shopping_cart_outlined,
-                        color: Colors.black54, size: 28),
+                    Icon(
+                      Icons.shopping_cart_outlined,
+                      color: Colors.black54,
+                      size: ResponsiveHelper.value(
+                        context: context,
+                        mobile: 24.0,
+                        desktop: 28.0,
+                      ),
+                    ),
                     if (cart.itemCount > 0)
                       Positioned(
                         right: -8,
                         top: -8,
                         child: Container(
-                          padding: const EdgeInsets.all(4),
+                          padding: EdgeInsets.all(
+                            ResponsiveHelper.value(
+                              context: context,
+                              mobile: 3.0,
+                              desktop: 4.0,
+                            ),
+                          ),
                           decoration: const BoxDecoration(
                             color: Color(0xFF4d2963),
                             shape: BoxShape.circle,
                           ),
-                          constraints: const BoxConstraints(
-                            minWidth: 18,
-                            minHeight: 18,
+                          constraints: BoxConstraints(
+                            minWidth: ResponsiveHelper.value(
+                              context: context,
+                              mobile: 16.0,
+                              desktop: 18.0,
+                            ),
+                            minHeight: ResponsiveHelper.value(
+                              context: context,
+                              mobile: 16.0,
+                              desktop: 18.0,
+                            ),
                           ),
                           child: Text(
                             '${cart.itemCount}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
-                              fontSize: 10,
+                              fontSize: ResponsiveHelper.fontSize(
+                                context: context,
+                                mobile: 9.0,
+                                desktop: 10.0,
+                              ),
                               fontWeight: FontWeight.bold,
                             ),
                             textAlign: TextAlign.center,
@@ -967,6 +1053,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ResponsiveHelper.isMobile(context) ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: const [
