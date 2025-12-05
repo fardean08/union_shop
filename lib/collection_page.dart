@@ -14,6 +14,23 @@ class CollectionPage extends StatelessWidget {
           children: [
             const AnnouncementBar(),
             const Navbar(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  DropdownButton<String>(
+                    value: 'A-Z',
+                    items: const [
+                      DropdownMenuItem(value: 'A-Z', child: Text('A-Z')),
+                      DropdownMenuItem(value: 'Z-A', child: Text('Z-A')),
+                      DropdownMenuItem(value: 'Newest', child: Text('Newest')),
+                    ],
+                    onChanged: (value) {}, // Non-functional
+                  ),
+                ],
+              ),
+            ),
             const CollectionHeader(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
