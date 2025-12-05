@@ -16,6 +16,7 @@ class CartItem {
   final int? maxQuantity;
   final Map<String, dynamic>? metadata;
   final CartVariant? variant; // Size, color, etc.
+  final String? oldPrice; // Original price before discount
 
   CartItem({
     String? id,
@@ -29,8 +30,13 @@ class CartItem {
     this.maxQuantity,
     this.metadata,
     this.variant,
+    this.oldPrice,
   })  : id = id ?? const Uuid().v4(),
         addedAt = addedAt ?? DateTime.now();
+
+  // Convenience getters for compatibility
+  String get title => name;
+  String get imageUrl => image;
 
   /// Get numeric price value
   double get numericPrice {
@@ -78,7 +84,6 @@ class CartItem {
     // Match by variant
     return variant!.matches(prodVariant);
   }
-
   /// Convert to JSON for storage
   Map<String, dynamic> toJson() {
     return {
@@ -93,6 +98,7 @@ class CartItem {
       'maxQuantity': maxQuantity,
       'metadata': metadata,
       'variant': variant?.toJson(),
+      'oldPrice': oldPrice,
     };
   }
 
@@ -113,6 +119,10 @@ class CartItem {
           : null,
       variant: json['variant'] != null
           ? CartVariant.fromJson(json['variant'] as Map<String, dynamic>)
+          : null,
+      oldPrice: json['oldPrice'] as String?,
+    );
+  }
           : null,
     );
   }
