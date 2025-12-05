@@ -8,13 +8,13 @@ class CollectionsShirtsPage extends StatelessWidget {
     final products = [
       {
         'title': 'Classic T-Shirt',
-        'image': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80',
+        'image': 'https://ml.thcdn.com/images/v2/productimg/original/17028758-9155259874746153.jpg?width=960&height=960',
         'price': '£11.00',
         'oldPrice': null,
       },
       {
         'title': 'Print Tee',
-        'image': 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+        'image': 'https://i5.walmartimages.com/asr/7ffec616-12c7-42df-ad9c-c63164d980b6_1.2eafd147c4ac5e7364d0004c1ae9c423.jpeg',
         'price': '£12.50',
         'oldPrice': '£15.00',
       },

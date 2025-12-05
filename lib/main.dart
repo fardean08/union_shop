@@ -365,12 +365,13 @@ class FeaturedSection extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AspectRatio(
-                                  aspectRatio: 1.2,
+                                SizedBox(
+                                  height: 120, // smaller image height
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
                                     child: Image.network(
                                       product['imageUrl'] as String,
+                                      width: double.infinity,
                                       fit: BoxFit.cover,
                                       errorBuilder:
                                           (context, error, stackTrace) {
@@ -472,12 +473,13 @@ class FeaturedSection extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AspectRatio(
-                                  aspectRatio: 1.2,
+                                SizedBox(
+                                  height: 120, // smaller image height
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
                                     child: Image.network(
                                       product['imageUrl'] as String,
+                                      width: double.infinity,
                                       fit: BoxFit.cover,
                                       errorBuilder:
                                           (context, error, stackTrace) {

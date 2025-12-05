@@ -8,13 +8,13 @@ class CollectionsHoodiesPage extends StatelessWidget {
     final products = [
       {
         'title': 'Classic Hoodie',
-        'image': 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80',
+        'image': 'https://cdn.media.amplience.net/i/gapprod/FA259608_Hoodies_DESK?fmt=webp',
         'price': '£23.00',
         'oldPrice': '£30.00',
       },
       {
         'title': 'Signature Hoodie',
-        'image': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80',
+        'image': 'https://media.wired.com/photos/67c2199410f97865da3e53a8/4:3/w_640%2Cc_limit/Mad-Happy-Classics-Fleece-Hoodie-(blue)-Offwhite-Background-SOURCE-Mad-Happy.jpg',
         'price': '£25.00',
         'oldPrice': null,
       },

@@ -7,14 +7,14 @@ class CollectionsAccessoriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final products = [
       {
-        'title': 'Classic Beanie Hat',
+        'title': 'Sunglasses',
         'image': 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=600&q=80',
-        'price': '£12.00',
+        'price': '£8.00',
         'oldPrice': null,
       },
       {
-        'title': 'Keep Cup',
-        'image': 'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=600&q=80',
+        'title': 'Beanie Hat',
+        'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsqHUGd7R_bq54pDynHaBNBI5ZE2NmKpmCBQ&s',
         'price': '£6.50',
         'oldPrice': null,
       },
