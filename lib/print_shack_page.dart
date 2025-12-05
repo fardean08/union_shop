@@ -495,20 +495,53 @@ class _PrintShackPageState extends State<PrintShackPage> {
                           ],
                         ),                        
                         const SizedBox(height: 24),
-                        
-                        // Add to cart button
+                          // Add to cart button
                         SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () {
-                              // Validation will be added in next step
+                              // Validate text input
+                              if (_line1Controller.text.trim().isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please enter text for personalisation'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+
+                              // Add to cart
+                              final cart = Provider.of<CartProvider>(context, listen: false);
+                              cart.addItem(CartItem(
+                                title: 'Personalisation - $_selectedLines',
+                                imageUrl: 'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                                price: '£3.00',
+                                oldPrice: null,
+                                size: _selectedLines,
+                                colour: 'Text: ${_line1Controller.text}',
+                                quantity: _quantity,
+                              ));
+
+                              // Show success message
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Add to cart functionality coming soon...'),
-                                  backgroundColor: Color(0xFF4d2963),
+                                SnackBar(
+                                  content: const Text('Added to cart!'),
+                                  backgroundColor: const Color(0xFF4d2963),
+                                  action: SnackBarAction(
+                                    label: 'View Cart',
+                                    textColor: Colors.white,
+                                    onPressed: () => Navigator.pushNamed(context, '/cart'),
+                                  ),
                                 ),
                               );
+
+                              // Clear form
+                              setState(() {
+                                _line1Controller.clear();
+                                _quantity = 1;
+                              });
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF4d2963),
