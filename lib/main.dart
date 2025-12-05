@@ -154,16 +154,6 @@ class Navbar extends StatelessWidget {
               ),
             ),
           ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
           const Spacer(),
           ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
@@ -249,10 +239,10 @@ class Navbar extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
-            } else {
+              );            } else {
               return const SizedBox.shrink();
-            }          }),
+            }
+          }),
           const Spacer(),
           InkWell(
             onTap: () {

@@ -91,14 +91,7 @@ class Navbar extends StatelessWidget {
                 },
               ),
             ),
-          ),
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
-                );
-              },
-            ),
-          ),          const Spacer(),
+          ),const Spacer(),
           ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
               return Padding(
@@ -184,10 +177,10 @@ class Navbar extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
-            } else {
+              );            } else {
               return const SizedBox.shrink();
-            }}),
+            }
+          }),
           const Spacer(),
           InkWell(
             onTap: () {
