@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});

@@ -964,16 +964,22 @@ class Footer extends StatelessWidget {
           ResponsiveHelper.isMobile(context)
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Opening Hours
+                  children: [                    // Opening Hours
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Opening Hours',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 14.0,
+                              desktop: 16.0,
+                            ),
+                          ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           '❄️ Winter Break Closure Dates ❄️\n\n'
                           'Closing 4pm 19/12/2025\n'
@@ -985,49 +991,98 @@ class Footer extends StatelessWidget {
                           '(Outside of Term Time / Consolidation Weeks)\n'
                           'Monday - Friday 10am - 3pm\n\n'
                           'Purchase online 24/7',
-                          style: TextStyle(fontSize: 13),
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 12.0,
+                              desktop: 13.0,
+                            ),
+                            height: 1.5,
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
-                    // Help and Information
+                    const SizedBox(height: 24),                    // Help and Information
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Help and Information',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 14.0,
+                              desktop: 16.0,
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 8),
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, '/about');
                           },
-                          child: const Text(
+                          child: Text(
                             'About Us',
                             style: TextStyle(
-                              color: Color(0xFF4d2963),
+                              color: const Color(0xFF4d2963),
                               decoration: TextDecoration.underline,
+                              fontSize: ResponsiveHelper.fontSize(
+                                context: context,
+                                mobile: 12.0,
+                                desktop: 13.0,
+                              ),
                             ),
                           ),
                         ),
-                        const Text('Terms & Conditions of Sale'),
-                        const Text('Policy'),
+                        Text(
+                          'Terms & Conditions of Sale',
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 12.0,
+                              desktop: 13.0,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'Policy',
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 12.0,
+                              desktop: 13.0,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 24),
-                    // Latest Offers
+                    const SizedBox(height: 24),                    // Latest Offers
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text(
+                        Text(
                           'Latest Offers',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 14.0,
+                              desktop: 16.0,
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 8),
                         TextField(
                           decoration: InputDecoration(
                             hintText: 'Email address',
+                            hintStyle: TextStyle(
+                              fontSize: ResponsiveHelper.fontSize(
+                                context: context,
+                                mobile: 12.0,
+                                desktop: 13.0,
+                              ),
+                            ),
                             border: OutlineInputBorder(),
                             isDense: true,
                             contentPadding:
@@ -1045,9 +1100,17 @@ class Footer extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {},
-                          child: const Text('SUBSCRIBE',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          child: Text(
+                            'SUBSCRIBE',
+                            style: TextStyle(
+                              fontSize: ResponsiveHelper.fontSize(
+                                context: context,
+                                mobile: 16.0,
+                                desktop: 18.0,
+                              ),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -1055,18 +1118,17 @@ class Footer extends StatelessWidget {
                 )
               : Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-          // Opening Hours
+                  children: [          // Opening Hours
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Opening Hours',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-                SizedBox(height: 8),
-                Text(
+                const SizedBox(height: 8),
+                const Text(
                   '❄️ Winter Break Closure Dates ❄️\n\n'
                   'Closing 4pm 19/12/2025\n'
                   'Reopening 10am 05/01/2026\n'
@@ -1077,7 +1139,7 @@ class Footer extends StatelessWidget {
                   '(Outside of Term Time / Consolidation Weeks)\n'
                   'Monday - Friday 10am - 3pm\n\n'
                   'Purchase online 24/7',
-                  style: TextStyle(fontSize: 13),
+                  style: TextStyle(fontSize: 13, height: 1.5),
                 ),
               ],
             ),
@@ -1089,7 +1151,7 @@ class Footer extends StatelessWidget {
               children: [
                 const Text(
                   'Help and Information',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 const SizedBox(height: 8),
                 InkWell(
@@ -1101,11 +1163,12 @@ class Footer extends StatelessWidget {
                     style: TextStyle(
                       color: Color(0xFF4d2963),
                       decoration: TextDecoration.underline,
+                      fontSize: 13,
                     ),
                   ),
                 ),
-                const Text('Terms & Conditions of Sale'),
-                const Text('Policy'),
+                const Text('Terms & Conditions of Sale', style: TextStyle(fontSize: 13)),
+                const Text('Policy', style: TextStyle(fontSize: 13)),
               ],
             ),
           ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ResponsiveHelper.isMobile(context) ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: const [
@@ -23,9 +25,10 @@ class AboutPage extends StatelessWidget {
 
 class Navbar extends StatelessWidget {
   const Navbar({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final isMobile = ResponsiveHelper.isMobile(context);
+    
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -35,7 +38,20 @@ class Navbar extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
               onPressed: () => Navigator.pop(context),
-            ),          GestureDetector(
+            ),
+          
+          // Hamburger menu for mobile
+          if (isMobile)
+            Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.menu, color: Color(0xFF4d2963)),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+            ),
+          
+          GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
@@ -90,9 +106,12 @@ class Navbar extends StatelessWidget {
                   );
                 },
               ),
-            ),
-          ),const Spacer(),
-          ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
+            ),          ),
+          const Spacer(),
+          
+          // Desktop navigation
+          if (!isMobile)
+            ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -178,24 +197,31 @@ class Navbar extends StatelessWidget {
                   ),
                 ),
               );            } else {
-              return const SizedBox.shrink();
-            }
+              return const SizedBox.shrink();            }
           }),
-          const Spacer(),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            child: const Icon(Icons.person_outline,
-                color: Colors.black54, size: 28),
-          ),
-          const SizedBox(width: 18),
+          
+          if (!isMobile) const Spacer(),
+          if (!isMobile)
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              child: const Icon(Icons.person_outline,
+                  color: Colors.black54, size: 28),
+            ),
+          if (!isMobile) const SizedBox(width: 18),
+          
           InkWell(
             onTap: () {
               Navigator.pushNamed(context, '/cart');
             },
-            child: const Icon(Icons.shopping_cart_outlined,
-                color: Colors.black54, size: 28),
+            child: Icon(Icons.shopping_cart_outlined,
+                color: Colors.black54,
+                size: ResponsiveHelper.value(
+                  context: context,
+                  mobile: 24.0,
+                  desktop: 28.0,
+                )),
           ),
         ],
       ),
@@ -205,27 +231,40 @@ class Navbar extends StatelessWidget {
 
 class AboutHero extends StatelessWidget {
   const AboutHero({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      padding: EdgeInsets.symmetric(
+        vertical: ResponsiveHelper.verticalPadding(context),
+        horizontal: ResponsiveHelper.horizontalPadding(context),
+      ),
       child: Column(
         children: [
-          const Text(
+          Text(
             'About us',
             style: TextStyle(
-              fontSize: 32,
+              fontSize: ResponsiveHelper.fontSize(
+                context: context,
+                mobile: 24.0,
+                tablet: 28.0,
+                desktop: 32.0,
+              ),
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 32),
-          SizedBox(
-            width: 700,
+          SizedBox(height: ResponsiveHelper.spacing(
+            context,
+            mobile: 20.0,
+            desktop: 32.0,
+          )),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: ResponsiveHelper.isMobile(context) ? double.infinity : 700,
+            ),
             child: Column(
               children: [
                 const Text(
