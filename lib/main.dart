@@ -812,13 +812,12 @@ class FeaturedSection extends StatelessWidget {
             'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80',
         'oldPrice': '£10.00',
         'price': '£6.99',
-      },
-    ];
+      },    ];
     final signatureProducts = [
       {
         'title': 'Signature Hoodie',
         'imageUrl':
-            'https://shop.upsu.net/cdn/shop/files/Signature_Green_Front_480x480.jpg?v=1698065647',
+            'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80',
         'price': '£32.99',
       },
       {
