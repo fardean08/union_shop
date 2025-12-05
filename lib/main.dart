@@ -811,7 +811,7 @@ class FeaturedSection extends StatelessWidget {
         'imageUrl':
             'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80',
         'oldPrice': '£10.00',
-        'price': '£6.99',
+        'price': '£5.99',
       },    ];
     final signatureProducts = [
       {
