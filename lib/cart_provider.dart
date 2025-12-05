@@ -37,7 +37,9 @@ class CartProvider extends ChangeNotifier {
 
   void addItem(CartItem item) {
     final existingIndex = _items.indexWhere((i) =>
-        i.title == item.title && i.size == item.size && i.colour == item.colour);
+        i.title == item.title &&
+        i.size == item.size &&
+        i.colour == item.colour);
     if (existingIndex >= 0) {
       _items[existingIndex].quantity += item.quantity;
     } else {
