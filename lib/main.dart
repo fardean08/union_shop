@@ -97,27 +97,49 @@ class Navbar extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
               onPressed: () => Navigator.pop(context),
-            ),
-          GestureDetector(
+            ),          GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: Image.network(
-              'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
-              height: 40,
-              errorBuilder: (context, error, stackTrace) {
-                return const Text(
-                  'The UNION',
-                  style: TextStyle(
-                    color: Color(0xFF4d2963),
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
-                );
-              },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.network(
+                  'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
+                  height: 50,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) {
+                    return RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'The ',
+                            style: TextStyle(
+                              color: Color(0xFF4d2963),
+                              fontSize: 32,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.italic,
+                              fontFamily: 'cursive',
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'UNION',
+                            style: TextStyle(
+                              color: Color(0xFF4d2963),
+                              fontSize: 32,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ),          const Spacer(),
+          ),
+          const Spacer(),
           ...['Home', 'Shop', 'Print Shack', 'SALE!', 'About'].map((item) {
             if (item == 'Home') {
               return Padding(
