@@ -29,12 +29,46 @@ class _CollectionsHoodiesPageState extends State<CollectionsHoodiesPage> {
       products,
       currentPage,
       itemsPerPage,
-    );
-
-    return Scaffold(
+    );    return Scaffold(
       appBar: AppBar(
-        title: const Text('Hoodies'),
         backgroundColor: const Color(0xFF4d2963),
+        title: Row(
+          children: [
+            SizedBox(
+              height: 35,
+              child: Image.network(
+                'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
+                height: 35,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const SizedBox(
+                    height: 35,
+                    width: 120,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Text(
+                    'The UNION',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(width: 16),
+            const Text('Hoodies'),
+          ],
+        ),
       ),
       body: Column(
         children: [
