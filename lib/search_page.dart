@@ -310,7 +310,6 @@ class SearchResults extends StatelessWidget {
     required this.isSearching,
     required this.query,
   });
-
   @override
   Widget build(BuildContext context) {
     if (isSearching) {
@@ -326,6 +325,66 @@ class SearchResults extends StatelessWidget {
 
     if (query.isEmpty) {
       return const SizedBox.shrink();
+    }
+
+    if (results.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(48.0),
+        child: Center(
+          child: Column(
+            children: [
+              Icon(
+                Icons.search_off,
+                size: 80,
+                color: Colors.grey[400],
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'No results found for "$query"',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Try different keywords or check your spelling',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/collections');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4d2963),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'Browse All Products',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     return Padding(
