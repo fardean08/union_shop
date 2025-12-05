@@ -11,6 +11,7 @@ import 'package:union_shop/login_page.dart';
 import 'package:union_shop/signup_page.dart';
 import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/cart_provider.dart';
+import 'package:union_shop/print_shack_page.dart';
 import 'package:union_shop/models/product.dart';
 
 void main() {
@@ -48,11 +49,11 @@ class UnionShopApp extends StatelessWidget {
         '/collections/shirts': (context) => const CollectionsShirtsPage(),
         '/collections/hoodies': (context) => const CollectionsHoodiesPage(),
         '/collections/accessories': (context) => const CollectionsAccessoriesPage(),
-        '/collection': (context) => const CollectionsPage(),
-        '/sale': (context) => const SalePage(),
+        '/collection': (context) => const CollectionsPage(),        '/sale': (context) => const SalePage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
         '/cart': (context) => const CartPage(),
+        '/print-shack': (context) => const PrintShackPage(),
       },
     );
   }
@@ -231,12 +232,11 @@ class _HeroBannerState extends State<HeroBanner> {
       'buttonText': 'VIEW SALE',
       'route': '/sale',
       'imageUrl': 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=800&q=80',
-    },
-    {
+    },    {
       'title': 'The Print Shack',
       'description': "Let's create something uniquely you with our personalisation service — From £3 for one line of text!",
       'buttonText': 'FIND OUT MORE',
-      'route': '/collections',
+      'route': '/print-shack',
       'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80',
     },
   ];
