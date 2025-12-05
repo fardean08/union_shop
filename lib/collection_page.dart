@@ -1,82 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'collection.dart';
-
-// Sample collections with dummy products
-final List<Collection> sampleCollections = [
-  Collection(
-    name: 'Hoodies',
-    imageUrl: 'https://via.placeholder.com/400x400?text=Hoodies',
-    products: [
-      {
-        'title': 'Classic Hoodie',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Classic+Hoodie',
-        'oldPrice': '£30.00',
-        'price': '£24.99',
-      },
-      {
-        'title': 'Zip Hoodie',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Zip+Hoodie',
-        'oldPrice': '£28.00',
-        'price': '£21.99',
-      },
-      {
-        'title': 'Pullover Hoodie',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Pullover+Hoodie',
-        'oldPrice': '£32.00',
-        'price': '£26.99',
-      },
-    ],
-  ),
-  Collection(
-    name: 'Jumpers',
-    imageUrl: 'https://via.placeholder.com/400x400?text=Jumpers',
-    products: [
-      {
-        'title': 'Crew Jumper',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Crew+Jumper',
-        'oldPrice': '£20.00',
-        'price': '£15.99',
-      },
-      {
-        'title': 'V-Neck Jumper',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=V-Neck+Jumper',
-        'oldPrice': '£22.00',
-        'price': '£17.99',
-      },
-      {
-        'title': 'Oversized Jumper',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Oversized+Jumper',
-        'oldPrice': '£24.00',
-        'price': '£19.99',
-      },
-    ],
-  ),
-  Collection(
-    name: 'Accessories',
-    imageUrl: 'https://via.placeholder.com/400x400?text=Accessories',
-    products: [
-      {
-        'title': 'Union Mug',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Union+Mug',
-        'oldPrice': '£8.00',
-        'price': '£4.99',
-      },
-      {
-        'title': 'Union Beanie',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Union+Beanie',
-        'oldPrice': '£10.00',
-        'price': '£5.99',
-      },
-      {
-        'title': 'Union Tote Bag',
-        'imageUrl': 'https://via.placeholder.com/400x400?text=Union+Tote+Bag',
-        'oldPrice': '£12.00',
-        'price': '£7.99',
-      },
-    ],
-  ),
-];
+import 'sample_collections.dart';
 
 class CollectionPage extends StatelessWidget {
   const CollectionPage({super.key});
@@ -86,12 +11,69 @@ class CollectionPage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            AnnouncementBar(),
-            Navbar(),
-            CollectionHeader(),
-            ProductGrid(),
-            Footer(),
+          children: [
+            const AnnouncementBar(),
+            const Navbar(),
+            const CollectionHeader(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                crossAxisSpacing: 24,
+                mainAxisSpacing: 24,
+                childAspectRatio: 0.9,
+                children: sampleCollections.map((collection) {
+                  return Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 1.2,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              collection.imageUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: const Center(
+                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            collection.name,
+                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            '${collection.products.length} products',
+                            style: const TextStyle(fontSize: 13, color: Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+            const Footer(),
           ],
         ),
       ),
