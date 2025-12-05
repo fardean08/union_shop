@@ -6,6 +6,7 @@ import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/login_page.dart';
 import 'package:union_shop/signup_page.dart';
 import 'package:union_shop/cart_page.dart';
+import 'package:union_shop/cart_provider.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -669,6 +670,7 @@ class _ProductPageState extends State<ProductPage> {
   String selectedSize = 'M';
   String selectedColour = 'Black';
   int quantity = 1;
+  final cartProvider = CartProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -780,6 +782,15 @@ class _ProductPageState extends State<ProductPage> {
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () {
+                          cartProvider.addItem(CartItem(
+                            title: widget.title,
+                            imageUrl: widget.imageUrl,
+                            price: widget.price,
+                            oldPrice: widget.oldPrice,
+                            size: selectedSize,
+                            colour: selectedColour,
+                            quantity: quantity,
+                          ));
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Added to cart!')),
                           );
