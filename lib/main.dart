@@ -5,6 +5,7 @@ import 'package:union_shop/collections_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/login_page.dart';
 import 'package:union_shop/signup_page.dart';
+import 'package:union_shop/cart_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -34,14 +35,11 @@ class UnionShopApp extends StatelessWidget {
             ),
         '/about': (context) => const AboutPage(),
         '/collections': (context) => const CollectionsPage(),
-        '/collection': (context) {
-          final collection =
-              ModalRoute.of(context)?.settings.arguments as Collection?;
-          return CollectionPage(collection: collection);
-        },
+        '/collection': (context) => const CollectionsPage(),
         '/sale': (context) => const SalePage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
+        '/cart': (context) => const CartPage(),
       },
     );
   }
@@ -173,8 +171,13 @@ class Navbar extends StatelessWidget {
                 color: Colors.black54, size: 28),
           ),
           const SizedBox(width: 18),
-          const Icon(Icons.shopping_cart_outlined,
-              color: Colors.black54, size: 28),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/cart');
+            },
+            child: const Icon(Icons.shopping_cart_outlined,
+                color: Colors.black54, size: 28),
+          ),
         ],
       ),
     );
