@@ -18,7 +18,6 @@ class _CartPageState extends State<CartPage> {
     _noteController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
@@ -42,7 +41,13 @@ class _CartPageState extends State<CartPage> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: cart.items.isEmpty
+      body: !cart.isLoaded
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF4d2963),
+              ),
+            )
+          : cart.items.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
