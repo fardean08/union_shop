@@ -34,7 +34,11 @@ class UnionShopApp extends StatelessWidget {
             ),
         '/about': (context) => const AboutPage(),
         '/collections': (context) => const CollectionsPage(),
-        '/collection': (context) => const CollectionPage(),
+        '/collection': (context) {
+          final collection =
+              ModalRoute.of(context)?.settings.arguments as Collection?;
+          return CollectionPage(collection: collection);
+        },
         '/sale': (context) => const SalePage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignupPage(),
