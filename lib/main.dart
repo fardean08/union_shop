@@ -252,12 +252,28 @@ class FeaturedSection extends StatelessWidget {
         'imageUrl': 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£20.00',
         'price': '£14.99',
+        'onSale': true,
       },
       {
         'title': 'Essential T-Shirt',
         'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£10.00',
         'price': '£6.99',
+        'onSale': true,
+      },
+      {
+        'title': 'Essential Crew',
+        'imageUrl': 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
+        'oldPrice': null,
+        'price': '£18.99',
+        'onSale': false,
+      },
+      {
+        'title': 'Essential Polo',
+        'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+        'oldPrice': null,
+        'price': '£12.99',
+        'onSale': false,
       },
     ];
     final signatureProducts = [
@@ -266,12 +282,14 @@ class FeaturedSection extends StatelessWidget {
         'imageUrl': 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
         'oldPrice': null,
         'price': '£32.99',
+        'onSale': false,
       },
       {
         'title': 'Signature T-Shirt',
         'imageUrl': 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
         'oldPrice': null,
         'price': '£14.99',
+        'onSale': false,
       },
     ];
     return Column(
@@ -284,12 +302,67 @@ class FeaturedSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
-            children: essentialProducts.map((product) => Expanded(
-              child: ProductCard(
-                title: product['title']!,
-                imageUrl: product['imageUrl']!,
-                oldPrice: product['oldPrice'],
-                price: product['price']!,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: essentialProducts.take(2).map((product) => Expanded(
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 1.2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.network(
+                            product['imageUrl'] as String,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        product['title'] as String,
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                        maxLines: 2,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          if (product['oldPrice'] != null)
+                            Text(
+                              product['oldPrice'] as String,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                          if (product['oldPrice'] != null) const SizedBox(width: 8),
+                          Text(
+                            product['price'] as String,
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.deepPurple,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             )).toList(),
           ),
@@ -301,12 +374,53 @@ class FeaturedSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: signatureProducts.map((product) => Expanded(
-              child: ProductCard(
-                title: product['title']!,
-                imageUrl: product['imageUrl']!,
-                oldPrice: null,
-                price: product['price']!,
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: 1.2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(6),
+                          child: Image.network(
+                            product['imageUrl'] as String,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: Colors.grey[300],
+                                child: const Center(
+                                  child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        product['title'] as String,
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                        maxLines: 2,
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        product['price'] as String,
+                        style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             )).toList(),
           ),
