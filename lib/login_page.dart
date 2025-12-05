@@ -47,7 +47,9 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 32),
                     ElevatedButton(
-                      onPressed: null,
+                      onPressed: () {
+                        // Add login logic here or leave empty for now
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF4d2963),
                         padding:
