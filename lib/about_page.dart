@@ -31,18 +31,29 @@ class Navbar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
+          if (Navigator.canPop(context))
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
+              onPressed: () => Navigator.pop(context),
+            ),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: const Text(
-              'The UNION',
-              style: TextStyle(
-                color: Color(0xFF4d2963),
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 2,
-              ),
+            child: Image.network(
+              'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
+              height: 40,
+              errorBuilder: (context, error, stackTrace) {
+                return const Text(
+                  'The UNION',
+                  style: TextStyle(
+                    color: Color(0xFF4d2963),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                  ),
+                );
+              },
             ),
           ),
           const Spacer(),
@@ -117,17 +128,23 @@ class Navbar extends StatelessWidget {
               );
             } else {
               return const SizedBox.shrink();
-            }
-          }),
+            }          }),
           const Spacer(),
           InkWell(
             onTap: () {
               Navigator.pushNamed(context, '/login');
             },
-            child: const Icon(Icons.person_outline, color: Colors.black54),
+            child: const Icon(Icons.person_outline,
+                color: Colors.black54, size: 28),
           ),
-          const SizedBox(width: 12),
-          const Icon(Icons.shopping_cart_outlined, color: Colors.black54),
+          const SizedBox(width: 18),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/cart');
+            },
+            child: const Icon(Icons.shopping_cart_outlined,
+                color: Colors.black54, size: 28),
+          ),
         ],
       ),
     );
