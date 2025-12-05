@@ -143,12 +143,19 @@ class _SearchPageState extends State<SearchPage> {
               controller: _searchController,
               onSearch: _performSearch,
               isSearching: _isSearching,
-            ),
-            SearchResults(
+            ),            SearchResults(
               results: _searchResults,
               isSearching: _isSearching,
               query: _searchController.text,
             ),
+            if (_searchController.text.isEmpty)
+              PopularSearches(
+                searches: _popularSearches,
+                onSearchTap: (query) {
+                  _searchController.text = query;
+                  _performSearch(query);
+                },
+              ),
             const Footer(),
           ],
         ),
