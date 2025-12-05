@@ -7,6 +7,9 @@ import 'package:union_shop/login_page.dart';
 import 'package:union_shop/signup_page.dart';
 import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/cart_provider.dart';
+import 'package:union_shop/collections_shirts_page.dart';
+import 'package:union_shop/collections_hoodies_page.dart';
+import 'package:union_shop/collections_accessories_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -29,13 +32,20 @@ class UnionShopApp extends StatelessWidget {
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
-        '/product': (context) => const ProductPage(
-              title: '',
-              imageUrl: '',
-              price: '',
-            ),
+        '/product': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          return ProductPage(
+            title: args?['title'] ?? '',
+            imageUrl: args?['imageUrl'] ?? '',
+            price: args?['price'] ?? '',
+            oldPrice: args?['oldPrice'] as String?,
+          );
+        },
         '/about': (context) => const AboutPage(),
         '/collections': (context) => const CollectionsPage(),
+        '/collections/shirts': (context) => const CollectionsShirtsPage(),
+        '/collections/hoodies': (context) => const CollectionsHoodiesPage(),
+        '/collections/accessories': (context) => const CollectionsAccessoriesPage(),
         '/collection': (context) => const CollectionsPage(),
         '/sale': (context) => const SalePage(),
         '/login': (context) => const LoginPage(),

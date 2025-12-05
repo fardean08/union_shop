@@ -6,16 +6,78 @@ class CollectionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = [
+      {
+        'title': 'T-Shirts',
+        'route': '/collections/shirts',
+        'image':
+            'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        'title': 'Hoodies',
+        'route': '/collections/hoodies',
+        'image':
+            'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        'title': 'Accessories',
+        'route': '/collections/accessories',
+        'image':
+            'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80'
+      },
+    ];
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            AnnouncementBar(),
-            Navbar(),
-            CollectionsGrid(),
-            Footer(),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('Collections'),
+        backgroundColor: const Color(0xFF4d2963),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: LayoutBuilder(builder: (context, constraints) {
+          final cross = constraints.maxWidth < 600 ? 1 : 3;
+          return GridView.count(
+            crossAxisCount: cross,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 3,
+            children: categories.map((cat) {
+              return InkWell(
+                onTap: () => Navigator.pushNamed(context, cat['route'] as String),
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.horizontal(
+                            left: Radius.circular(8)),
+                        child: Image.network(
+                          cat['image'] as String,
+                          width: 140,
+                          height: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (c, e, s) => Container(
+                            width: 140,
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.image_not_supported),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        cat['title'] as String,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        }),
       ),
     );
   }
