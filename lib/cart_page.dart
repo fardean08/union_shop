@@ -41,8 +41,7 @@ class _CartPageState extends State<CartPage> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-      ),
-      body: !cart.isLoaded
+      ),      body: cart.isLoading
           ? const Center(
               child: CircularProgressIndicator(
                 color: Color(0xFF4d2963),
@@ -412,20 +411,19 @@ class _CartPageState extends State<CartPage> {
       ],
     );
   }
-
   Widget _buildVariantDisplay(CartItem item) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Size: ${item.size}',
+          'Size: ${item.variant?.size ?? 'M'}',
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey.shade600,
           ),
         ),
         Text(
-          'Colour: ${item.colour}',
+          'Colour: ${item.variant?.colour ?? 'Black'}',
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey.shade600,
@@ -434,8 +432,10 @@ class _CartPageState extends State<CartPage> {
       ],
     );
   }
-
   Widget _buildEditableVariant(CartItem item, int index, CartProvider cart) {
+    final currentSize = item.variant?.size ?? 'M';
+    final currentColour = item.variant?.colour ?? 'Black';
+    
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -466,10 +466,10 @@ class _CartPageState extends State<CartPage> {
                         size,
                         style: const TextStyle(fontSize: 12),
                       ),
-                      selected: item.size == size,
+                      selected: currentSize == size,
                       onSelected: (selected) {
                         if (selected) {
-                          cart.updateItemVariant(index, size, item.colour);
+                          cart.updateItemVariant(index, size, currentColour);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Size updated to $size'),
@@ -480,10 +480,10 @@ class _CartPageState extends State<CartPage> {
                       },
                       selectedColor: const Color(0xFF4d2963).withOpacity(0.2),
                       labelStyle: TextStyle(
-                        color: item.size == size
+                        color: currentSize == size
                             ? const Color(0xFF4d2963)
                             : Colors.black87,
-                        fontWeight: item.size == size
+                        fontWeight: currentSize == size
                             ? FontWeight.bold
                             : FontWeight.normal,
                       ),
@@ -515,10 +515,10 @@ class _CartPageState extends State<CartPage> {
                         colour,
                         style: const TextStyle(fontSize: 12),
                       ),
-                      selected: item.colour == colour,
+                      selected: currentColour == colour,
                       onSelected: (selected) {
                         if (selected) {
-                          cart.updateItemVariant(index, item.size, colour);
+                          cart.updateItemVariant(index, currentSize, colour);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Colour updated to $colour'),
@@ -529,10 +529,10 @@ class _CartPageState extends State<CartPage> {
                       },
                       selectedColor: const Color(0xFF4d2963).withOpacity(0.2),
                       labelStyle: TextStyle(
-                        color: item.colour == colour
+                        color: currentColour == colour
                             ? const Color(0xFF4d2963)
                             : Colors.black87,
-                        fontWeight: item.colour == colour
+                        fontWeight: currentColour == colour
                             ? FontWeight.bold
                             : FontWeight.normal,
                       ),
