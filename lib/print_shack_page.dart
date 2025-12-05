@@ -194,19 +194,146 @@ class _PrintShackPageState extends State<PrintShackPage> {
                   ),
                 ],
               ),
-            ),
-            
-            // Page content placeholder
-            Container(
-              padding: const EdgeInsets.all(24),
-              child: const Center(
-                child: Text(
-                  'Print Shack - Personalisation Service',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+            ),            
+            // Page content
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 48),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Left side - Product images
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        // Main product image
+                        Container(
+                          width: double.infinity,
+                          height: 400,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: const Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.image_not_supported,
+                                          size: 64,
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          'Image unavailable',
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        // Thumbnail images
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(4),
+                                  border: Border.all(
+                                    color: const Color(0xFF4d2963),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Image.network(
+                                    'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Container(
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Image.network(
+                                    'https://shop.upsu.net/cdn/shop/files/Personalisation2_1024x1024@2x.jpg?v=1698070087',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                  
+                  const SizedBox(width: 48),
+                  
+                  // Right side - Product details (placeholder for next step)
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Personalisation',
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          '£3.00',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF4d2963),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const Text(
+                          'Tax included.',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        // Form fields will be added in next step
+                        const Text(
+                          'Customization options coming in next step...',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
