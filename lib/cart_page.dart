@@ -284,8 +284,7 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              
-              // Quantity controls
+                // Quantity controls
               Row(
                 children: [
                   Container(
@@ -297,11 +296,11 @@ class _CartPageState extends State<CartPage> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.remove, size: 16),
-                          onPressed: () {
-                            if (item.quantity > 1) {
-                              cart.updateQuantity(index, item.quantity - 1);
-                            }
-                          },
+                          onPressed: cart.canDecreaseQuantity(index)
+                              ? () {
+                                  cart.decrementQuantity(index);
+                                }
+                              : null, // Disabled when at minimum
                           constraints: const BoxConstraints(
                             minWidth: 32,
                             minHeight: 32,
@@ -320,9 +319,22 @@ class _CartPageState extends State<CartPage> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.add, size: 16),
-                          onPressed: () {
-                            cart.updateQuantity(index, item.quantity + 1);
-                          },
+                          onPressed: cart.canIncreaseQuantity(index)
+                              ? () {
+                                  final success = cart.incrementQuantity(index);
+                                  if (!success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          'Maximum quantity reached (${item.maxQuantity ?? 99})',
+                                        ),
+                                        backgroundColor: Colors.orange,
+                                        duration: const Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
+                                }
+                              : null, // Disabled when at maximum
                           constraints: const BoxConstraints(
                             minWidth: 32,
                             minHeight: 32,
@@ -332,6 +344,21 @@ class _CartPageState extends State<CartPage> {
                       ],
                     ),
                   ),
+                  // Show max quantity indicator if near limit
+                  if (item.maxQuantity != null && item.quantity >= (item.maxQuantity! * 0.8))
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Text(
+                        '${item.quantity}/${item.maxQuantity}',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: item.isAtMaxQuantity 
+                              ? Colors.red 
+                              : Colors.orange,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
                   const SizedBox(width: 16),
                   TextButton(
                     onPressed: () {
