@@ -557,6 +557,58 @@ class _PrintShackPageState extends State<PrintShackPage> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),                        ),
+                        
+                        const SizedBox(height: 32),
+                        
+                        // Pricing information
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.grey.shade200),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                '£3 for one line of text! £5 for two!',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF4d2963),
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                'One line of text is 10 characters.',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // Important notice
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.amber[50],
+                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(color: Colors.amber.shade200),
+                          ),
+                          child: const Text(
+                            'Please ensure all spellings are correct before submitting your purchase as we will print your item with the exact wording you provide. We will not be responsible for any incorrect spellings printed onto your garment. Personalised items do not qualify for refunds.',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black87,
+                              height: 1.5,
+                            ),
                           ),
                         ),
                         // Form fields will be added in next step
