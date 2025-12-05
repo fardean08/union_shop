@@ -14,6 +14,7 @@ import 'package:union_shop/cart_provider.dart';
 import 'package:union_shop/print_shack_page.dart';
 import 'package:union_shop/search_page.dart';
 import 'package:union_shop/models/product.dart';
+import 'package:union_shop/utils/responsive.dart';
 
 void main() {
   runApp(
@@ -74,11 +75,27 @@ class AnnouncementBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Colors.deepPurple,
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: const Text(
+      padding: EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: ResponsiveHelper.value(
+          context: context,
+          mobile: 8.0,
+          tablet: 16.0,
+          desktop: 24.0,
+        ),
+      ),
+      child: Text(
         'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
         style: TextStyle(
-            color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+          color: Colors.white,
+          fontSize: ResponsiveHelper.fontSize(
+            context: context,
+            mobile: 11.0,
+            tablet: 12.0,
+            desktop: 13.0,
+          ),
+          fontWeight: FontWeight.bold,
+        ),
         textAlign: TextAlign.center,
       ),
     );
