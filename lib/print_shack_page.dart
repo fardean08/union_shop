@@ -290,8 +290,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
                   Expanded(
                     flex: 1,
                     child: Column(
-                      children: [
-                        // Main product image
+                      children: [                        // Main product image
                         Container(
                           width: double.infinity,
                           height: 400,
@@ -302,7 +301,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                              'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(
@@ -329,8 +328,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        // Thumbnail images
+                        const SizedBox(height: 16),                        // Thumbnail images
                         Row(
                           children: [
                             Expanded(
@@ -347,7 +345,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(4),
                                   child: Image.network(
-                                    'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                                    'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -364,7 +362,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(4),
                                   child: Image.network(
-                                    'https://shop.upsu.net/cdn/shop/files/Personalisation2_1024x1024@2x.jpg?v=1698070087',
+                                    'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -599,7 +597,7 @@ class _PrintShackPageState extends State<PrintShackPage> {
                               cart.addItem(
                                 productId: 'personalisation-${_selectedLines}',
                                 name: 'Personalisation - $_selectedLines',
-                                image: 'https://shop.upsu.net/cdn/shop/files/Personalisation1_1024x1024@2x.jpg?v=1698070087',
+                                image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
                                 price: '£3.00',
                                 quantity: _quantity,
                                 variant: CartVariant(
