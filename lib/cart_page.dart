@@ -12,6 +12,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   final TextEditingController _noteController = TextEditingController();
   bool _showNoteField = false;
+  String? _editingItemId; // Track which item is being edited
 
   @override
   void dispose() {
