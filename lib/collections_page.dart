@@ -28,6 +28,7 @@ class CollectionsPage extends StatelessWidget {
             'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80'
       },
     ];    return Scaffold(
+      drawer: ResponsiveHelper.isMobile(context) ? const MobileDrawer() : null,
       appBar: AppBar(
         backgroundColor: const Color(0xFF4d2963),
         title: Row(
