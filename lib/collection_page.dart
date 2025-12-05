@@ -4,7 +4,8 @@ import 'collection.dart';
 import 'sample_collections.dart';
 
 class CollectionPage extends StatelessWidget {
-  const CollectionPage({super.key});
+  final Collection? collection;
+  const CollectionPage({super.key, this.collection});
 
   @override
   Widget build(BuildContext context) {
