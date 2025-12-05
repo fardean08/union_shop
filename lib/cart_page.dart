@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'cart_provider.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -18,19 +20,25 @@ class _CartPageState extends State<CartPage> {
   void dispose() {
     _noteController.dispose();
     super.dispose();
-  }
-  @override
+  }  @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+    final bool isMobile = ResponsiveHelper.isMobile(context);
     
     return Scaffold(
-      backgroundColor: Colors.white,      appBar: AppBar(
+      drawer: isMobile ? const MobileDrawer() : null,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         title: Row(
           children: [
             SizedBox(
-              height: 40,
+              height: ResponsiveHelper.value(
+                context: context,
+                mobile: 35.0,
+                desktop: 40.0,
+              ),
               child: Image.network(
                 'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
                 height: 40,
