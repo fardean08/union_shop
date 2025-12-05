@@ -105,25 +105,17 @@ class ProductGrid extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: essentialProducts.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 24,
-              mainAxisSpacing: 24,
-              childAspectRatio: 0.8,
-            ),
-            itemBuilder: (context, index) {
-              final product = essentialProducts[index];
-              return ProductCard(
-                title: product['title']!,
-                imageUrl: product['imageUrl']!,
-                oldPrice: product['oldPrice'],
-                price: product['price']!,
-              );
-            },
+          child: Row(
+            children: essentialProducts
+                .map((product) => Expanded(
+                      child: ProductCard(
+                        title: product['title']!,
+                        imageUrl: product['imageUrl']!,
+                        oldPrice: product['oldPrice'],
+                        price: product['price']!,
+                      ),
+                    ))
+                .toList(),
           ),
         ),
         const Padding(
@@ -133,25 +125,17 @@ class ProductGrid extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: signatureProducts.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 24,
-              mainAxisSpacing: 24,
-              childAspectRatio: 0.8,
-            ),
-            itemBuilder: (context, index) {
-              final product = signatureProducts[index];
-              return ProductCard(
-                title: product['title']!,
-                imageUrl: product['imageUrl']!,
-                oldPrice: null,
-                price: product['price']!,
-              );
-            },
+          child: Row(
+            children: signatureProducts
+                .map((product) => Expanded(
+                      child: ProductCard(
+                        title: product['title']!,
+                        imageUrl: product['imageUrl']!,
+                        oldPrice: null,
+                        price: product['price']!,
+                      ),
+                    ))
+                .toList(),
           ),
         ),
       ],
