@@ -314,17 +314,25 @@ class _CartPageState extends State<CartPage> {
             ),
     );
   }
-
   Widget _buildCartItem(BuildContext context, CartItem item, int index, CartProvider cart) {
     final isEditing = _editingItemId == item.id;
+    final bool isMobile = ResponsiveHelper.isMobile(context);
     
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Product image
         Container(
-          width: 100,
-          height: 100,
+          width: ResponsiveHelper.value(
+            context: context,
+            mobile: 80.0,
+            desktop: 100.0,
+          ),
+          height: ResponsiveHelper.value(
+            context: context,
+            mobile: 80.0,
+            desktop: 100.0,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             border: Border.all(color: Colors.grey.shade300),
@@ -344,7 +352,7 @@ class _CartPageState extends State<CartPage> {
           ),
         ),
         
-        const SizedBox(width: 16),
+        SizedBox(width: isMobile ? 12 : 16),
         
         // Product details
         Expanded(
@@ -353,8 +361,12 @@ class _CartPageState extends State<CartPage> {
             children: [
               Text(
                 item.title,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: ResponsiveHelper.fontSize(
+                    context: context,
+                    mobile: 14.0,
+                    desktop: 16.0,
+                  ),
                   fontWeight: FontWeight.w600,
                 ),
               ),
