@@ -315,63 +315,78 @@ class FeaturedSection extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: essentialProducts.take(2).map((product) => Expanded(
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 1.2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Image.network(
-                            product['imageUrl'] as String,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: Colors.grey[300],
-                                child: const Center(
-                                  child: Icon(Icons.image_not_supported, color: Colors.grey),
-                                ),
-                              );
-                            },
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductPage(
+                        title: product['title'] as String,
+                        imageUrl: product['imageUrl'] as String,
+                        price: product['price'] as String,
+                        oldPrice: product['oldPrice'] as String?,
+                      ),
+                    ),
+                  );
+                },
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 1.2,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              product['imageUrl'] as String,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: const Center(
+                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        product['title'] as String,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        maxLines: 2,
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          if (product['oldPrice'] != null)
-                            Text(
-                              product['oldPrice'] as String,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Colors.grey,
-                                decoration: TextDecoration.lineThrough,
+                        const SizedBox(height: 8),
+                        Text(
+                          product['title'] as String,
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                          maxLines: 2,
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            if (product['oldPrice'] != null)
+                              Text(
+                                product['oldPrice'] as String,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
                               ),
+                            if (product['oldPrice'] != null) const SizedBox(width: 8),
+                            Text(
+                              product['price'] as String,
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.deepPurple,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          if (product['oldPrice'] != null) const SizedBox(width: 8),
-                          Text(
-                            product['price'] as String,
-                            style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.deepPurple,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -398,49 +413,64 @@ class FeaturedSection extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: signatureProducts.map((product) => Expanded(
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 1.2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(6),
-                          child: Image.network(
-                            product['imageUrl'] as String,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: Colors.grey[300],
-                                child: const Center(
-                                  child: Icon(Icons.image_not_supported, color: Colors.grey),
-                                ),
-                              );
-                            },
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductPage(
+                        title: product['title'] as String,
+                        imageUrl: product['imageUrl'] as String,
+                        price: product['price'] as String,
+                        oldPrice: null,
+                      ),
+                    ),
+                  );
+                },
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 1.2,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              product['imageUrl'] as String,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: const Center(
+                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        product['title'] as String,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                        maxLines: 2,
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        product['price'] as String,
-                        style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.deepPurple,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                        const SizedBox(height: 8),
+                        Text(
+                          product['title'] as String,
+                          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                          maxLines: 2,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          product['price'] as String,
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Colors.deepPurple,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
