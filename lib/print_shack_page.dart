@@ -609,15 +609,45 @@ class _PrintShackPageState extends State<PrintShackPage> {
                               color: Colors.black87,
                               height: 1.5,
                             ),
-                          ),
-                        ),
-                        // Form fields will be added in next step
-                        const Text(
-                          'Customization options coming in next step...',
-                          style: TextStyle(color: Colors.grey),
-                        ),
+                          ),                        ),
                       ],
                     ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Footer
+            Container(
+              width: double.infinity,
+              color: Colors.grey[50],
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        '© 2025 The UNION Shop',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(width: 24),
+                      Text(
+                        '•',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      SizedBox(width: 24),
+                      Text(
+                        'Quality Apparel & Accessories',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
