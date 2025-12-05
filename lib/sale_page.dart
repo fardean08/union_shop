@@ -43,40 +43,69 @@ class _SalePageState extends State<SalePage> {
 
 class SaleBanner extends StatelessWidget {
   const SaleBanner({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      padding: EdgeInsets.symmetric(
+        vertical: ResponsiveHelper.value(
+          context: context,
+          mobile: 32.0,
+          desktop: 48.0,
+        ),
+        horizontal: ResponsiveHelper.value(
+          context: context,
+          mobile: 16.0,
+          desktop: 24.0,
+        ),
+      ),
       color: Colors.white,
       child: Column(
-        children: const [
+        children: [
           Text(
             'SALE',
             style: TextStyle(
-              color: Color(0xFF333333),
-              fontSize: 48,
+              color: const Color(0xFF333333),
+              fontSize: ResponsiveHelper.fontSize(
+                context: context,
+                mobile: 36.0,
+                tablet: 42.0,
+                desktop: 48.0,
+              ),
               fontWeight: FontWeight.bold,
               letterSpacing: 2,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Don\'t miss out! Get yours before they\'re all gone!',
             style: TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 18,
+              color: const Color(0xFF666666),
+              fontSize: ResponsiveHelper.fontSize(
+                context: context,
+                mobile: 16.0,
+                desktop: 18.0,
+              ),
               fontWeight: FontWeight.w400,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 32),
+          SizedBox(
+            height: ResponsiveHelper.value(
+              context: context,
+              mobile: 24.0,
+              desktop: 32.0,
+            ),
+          ),
           Text(
             'All prices shown are inclusive of the discount 🧾',
             style: TextStyle(
-              color: Color(0xFF666666),
-              fontSize: 16,
+              color: const Color(0xFF666666),
+              fontSize: ResponsiveHelper.fontSize(
+                context: context,
+                mobile: 14.0,
+                desktop: 16.0,
+              ),
               fontWeight: FontWeight.w400,
             ),
             textAlign: TextAlign.center,
