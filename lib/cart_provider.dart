@@ -116,14 +116,10 @@ class CartItem {
       maxQuantity: json['maxQuantity'] as int?,
       metadata: json['metadata'] != null
           ? Map<String, dynamic>.from(json['metadata'] as Map)
-          : null,
-      variant: json['variant'] != null
+          : null,      variant: json['variant'] != null
           ? CartVariant.fromJson(json['variant'] as Map<String, dynamic>)
           : null,
       oldPrice: json['oldPrice'] as String?,
-    );
-  }
-          : null,
     );
   }
 
@@ -140,6 +136,7 @@ class CartItem {
     int? maxQuantity,
     Map<String, dynamic>? metadata,
     CartVariant? variant,
+    String? oldPrice,
   }) {
     return CartItem(
       id: id ?? this.id,
@@ -153,6 +150,7 @@ class CartItem {
       maxQuantity: maxQuantity ?? this.maxQuantity,
       metadata: metadata ?? this.metadata,
       variant: variant ?? this.variant,
+      oldPrice: oldPrice ?? this.oldPrice,
     );
   }
 }
@@ -164,12 +162,14 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> get items => _items;
   bool get isLoading => _isLoading;
-
   int get itemCount => _items.length;
 
   double get totalAmount {
     return _items.fold(0.0, (sum, item) => sum + item.totalPrice);
   }
+
+  // Alias for compatibility
+  double get totalPrice => totalAmount;
 
   /// Load cart from storage on initialization
   Future<void> loadCart() async {
@@ -191,7 +191,6 @@ class CartProvider with ChangeNotifier {
   Future<void> _saveCart() async {
     await CartStorage.saveCart(_items);
   }
-
   /// Add item to cart with smart duplicate detection
   void addItem({
     required String productId,
@@ -203,6 +202,7 @@ class CartProvider with ChangeNotifier {
     int? maxQuantity,
     Map<String, dynamic>? metadata,
     CartVariant? variant,
+    String? oldPrice,
   }) {
     // Check if item with same product and variant already exists
     final existingIndex = _items.indexWhere(
@@ -233,6 +233,7 @@ class CartProvider with ChangeNotifier {
         maxQuantity: maxQuantity,
         metadata: metadata,
         variant: variant,
+        oldPrice: oldPrice,
       ));
     }
 
