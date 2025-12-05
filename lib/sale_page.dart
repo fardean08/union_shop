@@ -199,7 +199,7 @@ class SaleProductGrid extends StatelessWidget {
   List<Map<String, String>> _getSortedProducts() {
     final products = [
       {
-        'title': 'Union Hoodie',
+        'title': 'Union shirts',
         'imageUrl':
             'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£25.00',
@@ -207,7 +207,7 @@ class SaleProductGrid extends StatelessWidget {
         'numPrice': '17.99',
       },
       {
-        'title': 'Union T-Shirt',
+        'title': 'Union graphic T-Shirt',
         'imageUrl':
             'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£12.00',
@@ -215,7 +215,7 @@ class SaleProductGrid extends StatelessWidget {
         'numPrice': '7.99',
       },
       {
-        'title': 'Union Beanie',
+        'title': 'Union glasses',
         'imageUrl':
             'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
         'oldPrice': '£10.00',
