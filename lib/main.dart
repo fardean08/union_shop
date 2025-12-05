@@ -734,8 +734,10 @@ class _ProductPageState extends State<ProductPage> {
                       DropdownButton<String>(
                         value: selectedColour,
                         items: const [
-                          DropdownMenuItem(value: 'Black', child: Text('Black')),
-                          DropdownMenuItem(value: 'White', child: Text('White')),
+                          DropdownMenuItem(
+                              value: 'Black', child: Text('Black')),
+                          DropdownMenuItem(
+                              value: 'White', child: Text('White')),
                           DropdownMenuItem(value: 'Grey', child: Text('Grey')),
                         ],
                         onChanged: (value) {
@@ -756,7 +758,8 @@ class _ProductPageState extends State<ProductPage> {
                               });
                             },
                           ),
-                          Text('$quantity', style: const TextStyle(fontSize: 18)),
+                          Text('$quantity',
+                              style: const TextStyle(fontSize: 18)),
                           IconButton(
                             icon: const Icon(Icons.add),
                             onPressed: () {
@@ -777,12 +780,15 @@ class _ProductPageState extends State<ProductPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepPurple,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 48, vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
                           ),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
