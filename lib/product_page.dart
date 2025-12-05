@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'models/product.dart';
 import 'models/cart_variant.dart';
 import 'cart_provider.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class ProductPage extends StatefulWidget {
   final Product? product;
@@ -82,9 +84,10 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     // Use provided product or fallback to placeholder
     final product = widget.product;
-    final cart = Provider.of<CartProvider>(context);
+    final cart = Provider.of<CartProvider>(context);    final bool isMobile = ResponsiveHelper.isMobile(context);
 
     return Scaffold(
+      drawer: isMobile ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -96,12 +99,26 @@ class _ProductPageState extends State<ProductPage> {
                 children: [                  // Top banner
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: EdgeInsets.symmetric(
+                      vertical: ResponsiveHelper.value(
+                        context: context,
+                        mobile: 6.0,
+                        desktop: 8.0,
+                      ),
+                    ),
                     color: const Color(0xFF4d2963),
-                    child: const Text(
+                    child: Text(
                       'The UNION Shop - Quality Apparel & Accessories',
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: ResponsiveHelper.fontSize(
+                          context: context,
+                          mobile: 11.0,
+                          tablet: 13.0,
+                          desktop: 16.0,
+                        ),
+                      ),
                     ),
                   ),
                   // Main header
@@ -109,15 +126,35 @@ class _ProductPageState extends State<ProductPage> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
-                        children: [                          GestureDetector(
+                        children: [
+                          // Hamburger menu on mobile
+                          if (isMobile)
+                            Builder(
+                              builder: (context) => IconButton(
+                                icon: const Icon(Icons.menu, color: Color(0xFF4d2963)),
+                                onPressed: () => Scaffold.of(context).openDrawer(),
+                              ),
+                            ),
+                          
+                          GestureDetector(
                             onTap: () {
                               navigateToHome(context);
                             },
                             child: SizedBox(
-                              height: 40,
+                              height: ResponsiveHelper.value(
+                                context: context,
+                                mobile: 35.0,
+                                tablet: 40.0,
+                                desktop: 40.0,
+                              ),
                               child: Image.network(
                                 'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
-                                height: 40,
+                                height: ResponsiveHelper.value(
+                                  context: context,
+                                  mobile: 35.0,
+                                  tablet: 40.0,
+                                  desktop: 40.0,
+                                ),
                                 fit: BoxFit.contain,
                                 loadingBuilder: (context, child, loadingProgress) {
                                   if (loadingProgress == null) return child;
@@ -137,11 +174,15 @@ class _ProductPageState extends State<ProductPage> {
                                   );
                                 },
                                 errorBuilder: (context, error, stackTrace) {
-                                  return const Text(
+                                  return Text(
                                     'The UNION',
                                     style: TextStyle(
-                                      color: Color(0xFF4d2963),
-                                      fontSize: 20,
+                                      color: const Color(0xFF4d2963),
+                                      fontSize: ResponsiveHelper.fontSize(
+                                        context: context,
+                                        mobile: 16.0,
+                                        desktop: 20.0,
+                                      ),
                                       fontWeight: FontWeight.bold,
                                     ),
                                   );
@@ -150,94 +191,64 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ),
                           const Spacer(),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 600),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
+                          // Cart icon (always visible)
+                          Stack(
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  Icons.shopping_bag_outlined,
+                                  size: ResponsiveHelper.value(
+                                    context: context,
+                                    mobile: 24.0,
+                                    desktop: 28.0,
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
+                                  color: Colors.grey,
                                 ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.person_outline,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
+                                padding: const EdgeInsets.all(8),
+                                constraints: const BoxConstraints(
+                                  minWidth: 32,
+                                  minHeight: 32,
                                 ),
-                                Stack(
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(
-                                        Icons.shopping_bag_outlined,
-                                        size: 18,
-                                        color: Colors.grey,
-                                      ),
-                                      padding: const EdgeInsets.all(8),
-                                      constraints: const BoxConstraints(
-                                        minWidth: 32,
-                                        minHeight: 32,
-                                      ),
-                                      onPressed: () => navigateToCart(context),
+                                onPressed: () => navigateToCart(context),
+                              ),
+                              if (cart.itemCount > 0)
+                                Positioned(
+                                  right: 4,
+                                  top: 4,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF4d2963),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    if (cart.itemCount > 0)
-                                      Positioned(
-                                        right: 4,
-                                        top: 4,
-                                        child: Container(
-                                          padding: const EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFF4d2963),
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          constraints: const BoxConstraints(
-                                            minWidth: 16,
-                                            minHeight: 16,
-                                          ),
-                                          child: Text(
-                                            '${cart.itemCount}',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
+                                    constraints: BoxConstraints(
+                                      minWidth: ResponsiveHelper.value(
+                                        context: context,
+                                        mobile: 16.0,
+                                        desktop: 18.0,
                                       ),
-                                  ],
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 18,
-                                    color: Colors.grey,
+                                      minHeight: ResponsiveHelper.value(
+                                        context: context,
+                                        mobile: 16.0,
+                                        desktop: 18.0,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '${cart.itemCount}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: ResponsiveHelper.fontSize(
+                                          context: context,
+                                          mobile: 9.0,
+                                          desktop: 10.0,
+                                        ),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
                                 ),
-                              ],
-                            ),
+                            ],
                           ),
                         ],
                       ),
