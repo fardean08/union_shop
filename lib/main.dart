@@ -570,15 +570,24 @@ class _HeroBannerState extends State<HeroBanner> {
                             tablet: 15.0,
                             desktop: 18.0,
                           ),
-                        ),
-                        ElevatedButton(
+                        ),                        ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
                             foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 28,
-                              vertical: 12,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ResponsiveHelper.value(
+                                context: context,
+                                mobile: 20.0,
+                                tablet: 24.0,
+                                desktop: 28.0,
+                              ),
+                              vertical: ResponsiveHelper.value(
+                                context: context,
+                                mobile: 12.0,
+                                desktop: 12.0,
+                              ),
                             ),
+                            minimumSize: const Size(44, 44), // Touch-friendly minimum
                           ),
                           onPressed: () {
                             Navigator.pushNamed(context, slide['route'] as String);
