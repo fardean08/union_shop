@@ -38,10 +38,13 @@ class _CartPageState extends State<CartPage> {
                 context: context,
                 mobile: 35.0,
                 desktop: 40.0,
-              ),
-              child: Image.network(
+              ),              child: Image.network(
                 'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
-                height: 40,
+                height: ResponsiveHelper.value(
+                  context: context,
+                  mobile: 35.0,
+                  desktop: 40.0,
+                ),
                 fit: BoxFit.contain,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
