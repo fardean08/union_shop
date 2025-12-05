@@ -229,6 +229,8 @@ class _CartPageState extends State<CartPage> {
   }
 
   Widget _buildCartItem(BuildContext context, CartItem item, int index, CartProvider cart) {
+    final isEditing = _editingItemId == item.id;
+    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -270,20 +272,13 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                'Size: ${item.size}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-              Text(
-                'Colour: ${item.colour}',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey.shade600,
-                ),
-              ),
+              
+              // Size and Color - editable when in edit mode
+              if (isEditing)
+                _buildEditableVariant(item, index, cart)
+              else
+                _buildVariantDisplay(item),
+              
               const SizedBox(height: 8),
                 // Quantity controls
               Row(
@@ -297,11 +292,11 @@ class _CartPageState extends State<CartPage> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.remove, size: 16),
-                          onPressed: cart.canDecreaseQuantity(index)
+                          onPressed: item.quantity > 1
                               ? () {
-                                  cart.decrementQuantity(index);
+                                  cart.updateQuantity(index, item.quantity - 1);
                                 }
-                              : null, // Disabled when at minimum
+                              : null,
                           constraints: const BoxConstraints(
                             minWidth: 32,
                             minHeight: 32,
@@ -320,22 +315,9 @@ class _CartPageState extends State<CartPage> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.add, size: 16),
-                          onPressed: cart.canIncreaseQuantity(index)
-                              ? () {
-                                  final success = cart.incrementQuantity(index);
-                                  if (!success) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Maximum quantity reached (${item.maxQuantity ?? 99})',
-                                        ),
-                                        backgroundColor: Colors.orange,
-                                        duration: const Duration(seconds: 2),
-                                      ),
-                                    );
-                                  }
-                                }
-                              : null, // Disabled when at maximum
+                          onPressed: () {
+                            cart.updateQuantity(index, item.quantity + 1);
+                          },
                           constraints: const BoxConstraints(
                             minWidth: 32,
                             minHeight: 32,
@@ -345,22 +327,39 @@ class _CartPageState extends State<CartPage> {
                       ],
                     ),
                   ),
-                  // Show max quantity indicator if near limit
-                  if (item.maxQuantity != null && item.quantity >= (item.maxQuantity! * 0.8))
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Text(
-                        '${item.quantity}/${item.maxQuantity}',
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: item.isAtMaxQuantity 
-                              ? Colors.red 
-                              : Colors.orange,
-                          fontWeight: FontWeight.w500,
-                        ),
+                  const SizedBox(width: 16),
+                  
+                  // Edit button
+                  if (!isEditing)
+                    TextButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _editingItemId = item.id;
+                        });
+                      },
+                      icon: const Icon(Icons.edit, size: 16),
+                      label: const Text('Edit'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: const Color(0xFF4d2963),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                      ),
+                    )
+                  else
+                    TextButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _editingItemId = null;
+                        });
+                      },
+                      icon: const Icon(Icons.check, size: 16),
+                      label: const Text('Done'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.green,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                       ),
                     ),
-                  const SizedBox(width: 16),
+                  
+                  const SizedBox(width: 8),
                   TextButton(
                     onPressed: () {
                       cart.removeItem(index);
@@ -411,6 +410,141 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildVariantDisplay(CartItem item) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Size: ${item.size}',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey.shade600,
+          ),
+        ),
+        Text(
+          'Colour: ${item.colour}',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey.shade600,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEditableVariant(CartItem item, int index, CartProvider cart) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(color: Colors.blue.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Size selector
+          Row(
+            children: [
+              const Text(
+                'Size:',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Wrap(
+                  spacing: 6,
+                  children: ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) {
+                    return ChoiceChip(
+                      label: Text(
+                        size,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      selected: item.size == size,
+                      onSelected: (selected) {
+                        if (selected) {
+                          cart.updateItemVariant(index, size, item.colour);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Size updated to $size'),
+                              duration: const Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                      },
+                      selectedColor: const Color(0xFF4d2963).withOpacity(0.2),
+                      labelStyle: TextStyle(
+                        color: item.size == size
+                            ? const Color(0xFF4d2963)
+                            : Colors.black87,
+                        fontWeight: item.size == size
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          // Color selector
+          Row(
+            children: [
+              const Text(
+                'Colour:',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Wrap(
+                  spacing: 6,
+                  children: ['Black', 'White', 'Purple', 'Navy', 'Grey'].map((colour) {
+                    return ChoiceChip(
+                      label: Text(
+                        colour,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      selected: item.colour == colour,
+                      onSelected: (selected) {
+                        if (selected) {
+                          cart.updateItemVariant(index, item.size, colour);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Colour updated to $colour'),
+                              duration: const Duration(seconds: 1),
+                            ),
+                          );
+                        }
+                      },
+                      selectedColor: const Color(0xFF4d2963).withOpacity(0.2),
+                      labelStyle: TextStyle(
+                        color: item.colour == colour
+                            ? const Color(0xFF4d2963)
+                            : Colors.black87,
+                        fontWeight: item.colour == colour
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
