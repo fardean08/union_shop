@@ -798,13 +798,12 @@ class FeaturedSection extends StatelessWidget {
       ),
     );
   }
-  
-  @override  Widget build(BuildContext context) {
+    @override  Widget build(BuildContext context) {
     final essentialProducts = [
       {
         'title': 'Limited Edition Essential Zip Hoodies',
         'imageUrl':
-            'https://lh3.googleusercontent.com/gg/AIJ2gl9CVug7_pBXwkCZWaH9U0yGJzB8KbrY3GGiAovuV_0p0LZhtBoD8hAd5q_7zaKHY66hwCb9_EGcNgHaK8XoLQOZGWm1dMeSrOqlsYhqvH-gcSkh4LwTFGSBTKpnbP7rG9DlTOae4NclKkhInLxuMgQnrOvw-SzokcVwbh2N5El4AKes5x5gPSogXUu6E3D2g3OLqPLOyndHACbZJjWlQIfhTfHarDSnZW1uWAx14kyTUB7yJvrVED-1Z2ShxmcMDAi3ckQw50oiClpUpw2NK1P-MScpWLp_J6HEilzvhGoRjevqjTaORwyqKCpQc0tU03G7W8SEXGcaVLWAP5YrVt9V=s1024-rj',
+            'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
         'oldPrice': '£20.00',
         'price': '£14.99',
       },
