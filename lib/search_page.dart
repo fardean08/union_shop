@@ -45,10 +45,79 @@ class _SearchPageState extends State<SearchPage> {
       }
     });
   }
-
   List<Map<String, String>> _getSearchResults(String query) {
-    // This will be implemented in the next step
-    return [];
+    if (query.isEmpty) return [];
+
+    // Sample product database
+    final allProducts = [
+      {
+        'title': 'Union Hoodie - Purple',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80',
+        'price': '£25.00',
+        'category': 'Hoodies',
+      },
+      {
+        'title': 'Union T-Shirt - White',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80',
+        'price': '£12.00',
+        'category': 'T-Shirts',
+      },
+      {
+        'title': 'Union Beanie - Black',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80',
+        'price': '£10.00',
+        'category': 'Accessories',
+      },
+      {
+        'title': 'Union Mug - Ceramic',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=400&q=80',
+        'price': '£8.00',
+        'category': 'Accessories',
+      },
+      {
+        'title': 'Essential Hoodie - Navy',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=400&q=80',
+        'price': '£30.00',
+        'category': 'Hoodies',
+      },
+      {
+        'title': 'Signature T-Shirt - Black',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80',
+        'price': '£15.00',
+        'category': 'T-Shirts',
+      },
+      {
+        'title': 'Union Cap - Embroidered',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=400&q=80',
+        'price': '£12.00',
+        'category': 'Accessories',
+      },
+      {
+        'title': 'Premium Hoodie - Grey',
+        'imageUrl':
+            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80',
+        'price': '£35.00',
+        'category': 'Hoodies',
+      },
+    ];
+
+    final queryLower = query.toLowerCase();
+
+    // Filter products based on query
+    return allProducts.where((product) {
+      final titleLower = product['title']!.toLowerCase();
+      final categoryLower = product['category']!.toLowerCase();
+
+      return titleLower.contains(queryLower) ||
+          categoryLower.contains(queryLower);
+    }).toList();
   }
   @override
   Widget build(BuildContext context) {
@@ -62,11 +131,15 @@ class _SearchPageState extends State<SearchPage> {
             SearchHeader(
               controller: _searchController,
               onSearch: _performSearch,
-            ),
-            SearchBar(
+            ),            SearchBar(
               controller: _searchController,
               onSearch: _performSearch,
               isSearching: _isSearching,
+            ),
+            SearchResults(
+              results: _searchResults,
+              isSearching: _isSearching,
+              query: _searchController.text,
             ),
             const Footer(),
           ],
