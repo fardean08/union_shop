@@ -296,8 +296,19 @@ class FeaturedSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          child: Text('ESSENTIAL RANGE - OVER 20% OFF!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          padding: EdgeInsets.symmetric(vertical: 24),
+          child: Center(
+            child: Text(
+              'ESSENTIAL RANGE - OVER 20% OFF!',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                color: Color(0xFF4d2963),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -368,8 +379,19 @@ class FeaturedSection extends StatelessWidget {
           ),
         ),
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          child: Text('SIGNATURE RANGE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          padding: EdgeInsets.symmetric(vertical: 24),
+          child: Center(
+            child: Text(
+              'SIGNATURE RANGE',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                color: Color(0xFF4d2963),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
