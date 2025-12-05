@@ -493,9 +493,39 @@ class _PrintShackPageState extends State<PrintShackPage> {
                               ),
                             ),
                           ],
-                        ),
-                        
+                        ),                        
                         const SizedBox(height: 24),
+                        
+                        // Add to cart button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Validation will be added in next step
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Add to cart functionality coming soon...'),
+                                  backgroundColor: Color(0xFF4d2963),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF4d2963),
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            child: const Text(
+                              'ADD TO CART',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
                         // Form fields will be added in next step
                         const Text(
                           'Customization options coming in next step...',
