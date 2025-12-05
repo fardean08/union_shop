@@ -640,7 +640,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String price;
@@ -655,6 +655,15 @@ class ProductPage extends StatelessWidget {
   });
 
   @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  String selectedSize = 'M';
+  String selectedColour = 'Black';
+  int quantity = 1;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -667,7 +676,7 @@ class ProductPage extends StatelessWidget {
               child: Column(
                 children: [
                   Image.network(
-                    imageUrl,
+                    widget.imageUrl,
                     width: 600,
                     height: 400,
                     fit: BoxFit.cover,
@@ -680,7 +689,7 @@ class ProductPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        widget.title,
                         style: const TextStyle(
                             fontSize: 28, fontWeight: FontWeight.bold),
                       ),
@@ -688,16 +697,16 @@ class ProductPage extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            price,
+                            widget.price,
                             style: const TextStyle(
                                 fontSize: 22,
                                 color: Colors.deepPurple,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(width: 16),
-                          if (oldPrice != null)
+                          if (widget.oldPrice != null)
                             Text(
-                              oldPrice!,
+                              widget.oldPrice!,
                               style: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,
@@ -706,67 +715,74 @@ class ProductPage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 24),
-                      // Non-functional Dropdowns
+                      // Size selector
                       DropdownButton<String>(
-                        value: 'Size',
+                        value: selectedSize,
                         items: const [
-                          DropdownMenuItem(value: 'Size', child: Text('Size')),
-                          DropdownMenuItem(value: 'S', child: Text('S')),
-                          DropdownMenuItem(value: 'M', child: Text('M')),
-                          DropdownMenuItem(value: 'L', child: Text('L')),
+                          DropdownMenuItem(value: 'S', child: Text('Small')),
+                          DropdownMenuItem(value: 'M', child: Text('Medium')),
+                          DropdownMenuItem(value: 'L', child: Text('Large')),
                         ],
-                        onChanged: null,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedSize = value ?? 'M';
+                          });
+                        },
                       ),
                       const SizedBox(height: 12),
+                      // Colour selector
                       DropdownButton<String>(
-                        value: 'Colour',
+                        value: selectedColour,
                         items: const [
-                          DropdownMenuItem(
-                              value: 'Colour', child: Text('Colour')),
-                          DropdownMenuItem(value: 'Red', child: Text('Red')),
-                          DropdownMenuItem(value: 'Blue', child: Text('Blue')),
-                          DropdownMenuItem(
-                              value: 'Green', child: Text('Green')),
+                          DropdownMenuItem(value: 'Black', child: Text('Black')),
+                          DropdownMenuItem(value: 'White', child: Text('White')),
+                          DropdownMenuItem(value: 'Grey', child: Text('Grey')),
                         ],
-                        onChanged: null,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedColour = value ?? 'Black';
+                          });
+                        },
                       ),
-                      const SizedBox(height: 24),
-                      // Quantity and Add to Cart
+                      const SizedBox(height: 12),
+                      // Quantity selector
                       Row(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.remove, color: Colors.grey),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 16),
-                                  child:
-                                      Text('1', style: TextStyle(fontSize: 16)),
-                                ),
-                                const Icon(Icons.add, color: Colors.grey),
-                              ],
-                            ),
+                          IconButton(
+                            icon: const Icon(Icons.remove),
+                            onPressed: () {
+                              setState(() {
+                                if (quantity > 1) quantity--;
+                              });
+                            },
                           ),
-                          const SizedBox(width: 24),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF4d2963),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 32, vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                            ),
-                            onPressed: null,
-                            child: const Text('Add to Cart',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text('$quantity', style: const TextStyle(fontSize: 18)),
+                          IconButton(
+                            icon: const Icon(Icons.add),
+                            onPressed: () {
+                              setState(() {
+                                quantity++;
+                              });
+                            },
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Added to cart!')),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                        child: const Text('Add to Cart', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
