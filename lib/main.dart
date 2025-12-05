@@ -272,21 +272,20 @@ class HeroBanner extends StatelessWidget {
 
 class FeaturedSection extends StatelessWidget {
   const FeaturedSection({super.key});
-
   @override
   Widget build(BuildContext context) {
     final essentialProducts = [
       {
         'title': 'Limited Edition Essential Zip Hoodies',
         'imageUrl':
-            'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
+            'https://shop.upsu.net/cdn/shop/files/Essentials_Pink_FrontandBack_480x480.jpg?v=1698065356',
         'oldPrice': '£20.00',
         'price': '£14.99',
       },
       {
         'title': 'Essential T-Shirt',
         'imageUrl':
-            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
+            'https://shop.upsu.net/cdn/shop/files/Essentials_Green_Front_480x480.jpg?v=1698065452',
         'oldPrice': '£10.00',
         'price': '£6.99',
       },
@@ -295,41 +294,42 @@ class FeaturedSection extends StatelessWidget {
       {
         'title': 'Signature Hoodie',
         'imageUrl':
-            'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
+            'https://shop.upsu.net/cdn/shop/files/Signature_Green_Front_480x480.jpg?v=1698065647',
         'price': '£32.99',
       },
       {
         'title': 'Signature T-Shirt',
         'imageUrl':
-            'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
+            'https://shop.upsu.net/cdn/shop/files/Signature_Navy_Front_480x480.jpg?v=1698065728',
         'price': '£14.99',
       },
     ];
-    
-    return Column(
+      return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        const SizedBox(height: 48),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           child: Text(
             'ESSENTIAL RANGE - OVER 20% OFF!',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
-              color: Color(0xFF333333),
+              letterSpacing: 2,
+              color: Color(0xFF666666),
             ),
             textAlign: TextAlign.center,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 48),
+          padding: const EdgeInsets.symmetric(horizontal: 120),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: essentialProducts.map((product) {
-              return Expanded(                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: InkWell(
                     onTap: () {
                       // Create a Product object for navigation
@@ -343,7 +343,7 @@ class FeaturedSection extends StatelessWidget {
                             : null,
                         category: 'featured',
                         sizes: ['S', 'M', 'L', 'XL'],
-                        colors: ['Black', 'White', 'Navy'],
+                        colors: ['Baby Pink', 'Black', 'White', 'Navy'],
                         isOnSale: product['oldPrice'] != null,
                       );
                       Navigator.pushNamed(context, '/product', arguments: productObj);
@@ -352,9 +352,11 @@ class FeaturedSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AspectRatio(
-                          aspectRatio: 0.75,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(0),
+                          aspectRatio: 1.0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                            ),
                             child: Image.network(
                               product['imageUrl'] as String,
                               fit: BoxFit.cover,
@@ -370,18 +372,18 @@ class FeaturedSection extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
                         Text(
                           product['title'] as String,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF333333),
+                            color: Color(0xFF666666),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 8),
                         Row(
                           children: [
                             if (product['oldPrice'] != null) ...[
@@ -398,8 +400,8 @@ class FeaturedSection extends StatelessWidget {
                             Text(
                               product['price'] as String,
                               style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF333333),
+                                fontSize: 13,
+                                color: Color(0xFF666666),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -413,28 +415,29 @@ class FeaturedSection extends StatelessWidget {
             }).toList(),
           ),
         ),
-        const SizedBox(height: 48),
+        const SizedBox(height: 80),
         const Padding(
-          padding: EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           child: Text(
             'SIGNATURE RANGE',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
-              color: Color(0xFF333333),
+              letterSpacing: 2,
+              color: Color(0xFF666666),
             ),
             textAlign: TextAlign.center,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 48),
+          padding: const EdgeInsets.symmetric(horizontal: 120),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: signatureProducts.map((product) {
-              return Expanded(                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+              return Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: InkWell(
                     onTap: () {
                       // Create a Product object for navigation
@@ -446,7 +449,7 @@ class FeaturedSection extends StatelessWidget {
                         oldPrice: null,
                         category: 'signature',
                         sizes: ['S', 'M', 'L', 'XL'],
-                        colors: ['Black', 'White', 'Navy'],
+                        colors: ['Sage Green', 'Navy', 'Black', 'White'],
                         isOnSale: false,
                       );
                       Navigator.pushNamed(context, '/product', arguments: productObj);
@@ -455,9 +458,11 @@ class FeaturedSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AspectRatio(
-                          aspectRatio: 0.75,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(0),
+                          aspectRatio: 1.0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                            ),
                             child: Image.network(
                               product['imageUrl'] as String,
                               fit: BoxFit.cover,
@@ -473,23 +478,23 @@ class FeaturedSection extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 16),
                         Text(
                           product['title'] as String,
                           style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF333333),
+                            color: Color(0xFF666666),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 8),
                         Text(
                           product['price'] as String,
                           style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF333333),
+                            fontSize: 13,
+                            color: Color(0xFF666666),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
