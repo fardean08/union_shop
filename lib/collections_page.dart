@@ -14,13 +14,12 @@ class CollectionsPage extends StatelessWidget {
         'route': '/collections/shirts',
         'image':
             'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80'
-      },
-      {
+      },      {
         'title': 'Hoodies',
         'route': '/collections/hoodies',
         'image':
-            'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80'
-      },      {
+            'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80'
+      },{
         'title': 'Accessories',
         'route': '/collections/accessories',
         'image':
