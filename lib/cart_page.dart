@@ -217,34 +217,45 @@ class _CartPageState extends State<CartPage> {
                       ),
                     
                     const SizedBox(height: 24),
-                    
-                    // Subtotal
+                      // Subtotal
                     const Divider(),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Subtotal',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 16.0,
+                              desktop: 18.0,
+                            ),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         Text(
                           '£${cart.totalPrice.toStringAsFixed(2)}',
-                          style: const TextStyle(
-                            fontSize: 18,
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 16.0,
+                              desktop: 18.0,
+                            ),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       'Tax included and shipping calculated at checkout',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: ResponsiveHelper.fontSize(
+                          context: context,
+                          mobile: 12.0,
+                          desktop: 14.0,
+                        ),
                         color: Colors.grey,
                       ),
                     ),
