@@ -323,7 +323,178 @@ class _PrintShackPageState extends State<PrintShackPage> {
                             fontSize: 14,
                             color: Colors.grey,
                           ),
+                        ),                        const SizedBox(height: 24),
+                        
+                        // Per Line Dropdown
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Per Line: One Line of Text',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade300),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: _selectedLines,
+                                  isExpanded: true,
+                                  items: const [
+                                    DropdownMenuItem(
+                                      value: 'One Line of Text',
+                                      child: Text('One Line of Text'),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: 'Two Lines of Text',
+                                      child: Text('Two Lines of Text'),
+                                    ),
+                                  ],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedLines = value!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // Personalisation Line 1
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Personalisation Line 1:',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextField(
+                              controller: _line1Controller,
+                              maxLength: 10,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey.shade300),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey.shade300),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Color(0xFF4d2963)),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 12,
+                                ),
+                                counterText: '',
+                              ),
+                            ),
+                          ],
+                        ),
+                        
+                        const SizedBox(height: 24),
+                        
+                        // Quantity
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Quantity',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Container(
+                              height: 50,
+                              width: 120,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey.shade300),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        '$_quantity',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              _quantity++;
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                left: BorderSide(color: Colors.grey.shade300),
+                                                bottom: BorderSide(color: Colors.grey.shade300),
+                                              ),
+                                            ),
+                                            child: const Icon(Icons.arrow_drop_up, size: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: InkWell(
+                                          onTap: () {
+                                            if (_quantity > 1) {
+                                              setState(() {
+                                                _quantity--;
+                                              });
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 30,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                left: BorderSide(color: Colors.grey.shade300),
+                                              ),
+                                            ),
+                                            child: const Icon(Icons.arrow_drop_down, size: 20),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        
                         const SizedBox(height: 24),
                         // Form fields will be added in next step
                         const Text(
