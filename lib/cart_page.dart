@@ -24,24 +24,60 @@ class _CartPageState extends State<CartPage> {
     final cart = Provider.of<CartProvider>(context);
     
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+      backgroundColor: Colors.white,      appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Your cart',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          children: [
+            Image.network(
+              'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
+              height: 35,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return RichText(
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'The ',
+                        style: TextStyle(
+                          color: Color(0xFF4d2963),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic,
+                          fontFamily: 'cursive',
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'UNION',
+                        style: TextStyle(
+                          color: Color(0xFF4d2963),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const SizedBox(width: 16),
+            const Text(
+              'Your cart',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
         centerTitle: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-      ),      body: cart.isLoading
+      ),body: cart.isLoading
           ? const Center(
               child: CircularProgressIndicator(
                 color: Color(0xFF4d2963),
