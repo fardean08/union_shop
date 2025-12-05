@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/product.dart';
+import 'models/cart_variant.dart';
 import 'cart_provider.dart';
 
 class ProductPage extends StatefulWidget {
@@ -46,21 +47,24 @@ class _ProductPageState extends State<ProductPage> {
         ),
       );
       return;
-    }
-
-    final cart = Provider.of<CartProvider>(context, listen: false);
+    }    final cart = Provider.of<CartProvider>(context, listen: false);
     final product = widget.product;
     
     if (product != null) {
-      cart.addItem(CartItem(
-        title: product.title,
-        imageUrl: product.imageUrl,
+      cart.addItem(
+        productId: product.id,
+        name: product.title,
+        image: product.imageUrl,
         price: product.priceString,
         oldPrice: product.oldPriceString,
-        size: selectedSize!,
-        colour: selectedColour!,
         quantity: quantity,
-      ));      ScaffoldMessenger.of(context).showSnackBar(
+        variant: CartVariant(
+          size: selectedSize!,
+          colour: selectedColour!,
+        ),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text('Added to cart!'),
           backgroundColor: const Color(0xFF4d2963),
