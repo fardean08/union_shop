@@ -141,10 +141,16 @@ class _CartPageState extends State<CartPage> {
                   ),
                 ],
               ),
-            )
-          : SingleChildScrollView(
+            )          : SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(
+                  ResponsiveHelper.value(
+                    context: context,
+                    mobile: 12.0,
+                    tablet: 16.0,
+                    desktop: 16.0,
+                  ),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
