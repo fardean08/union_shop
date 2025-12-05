@@ -20,12 +20,11 @@ class CollectionsPage extends StatelessWidget {
         'route': '/collections/hoodies',
         'image':
             'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80'
-      },
-      {
+      },      {
         'title': 'Accessories',
         'route': '/collections/accessories',
         'image':
-            'https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=800&q=80'
+            'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80'
       },
     ];    return Scaffold(
       drawer: ResponsiveHelper.isMobile(context) ? const MobileDrawer() : null,
