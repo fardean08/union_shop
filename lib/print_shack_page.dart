@@ -392,13 +392,12 @@ class _PrintShackPageState extends State<PrintShackPage> {
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey.shade300),
                                   borderRadius: BorderRadius.circular(4),
-                                ),
-                                enabledBorder: OutlineInputBorder(
+                                ),                              enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey.shade300),
                                   borderRadius: BorderRadius.circular(4),
                                 ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Color(0xFF4d2963)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(color: Color(0xFF4d2963)),
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
