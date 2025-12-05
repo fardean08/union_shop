@@ -152,42 +152,126 @@ class CartProvider extends ChangeNotifier {
   int get itemCount => _items.fold(0, (sum, item) => sum + item.quantity);
 
   double get totalPrice {
-    return _items.fold(0.0, (sum, item) {
-      final priceStr = item.price.replaceAll('£', '').replaceAll(',', '');
-      final price = double.tryParse(priceStr) ?? 0.0;
-      return sum + (price * item.quantity);
-    });
+    return _items.fold(0.0, (sum, item) => sum + item.totalPrice);
   }
 
+  // Get total discount amount across all items
+  double get totalDiscount {
+    return _items.fold(0.0, (sum, item) => sum + item.discountAmount);
+  }
+
+  // Get total items (unique products, not quantity)
+  int get uniqueItemCount => _items.length;
+
   void addItem(CartItem item) {
+    // Check if similar item exists (same product, size, color)
     final existingIndex = _items.indexWhere((i) =>
+        i.productId == item.productId &&
         i.title == item.title &&
         i.size == item.size &&
         i.colour == item.colour);
+    
     if (existingIndex >= 0) {
-      _items[existingIndex].quantity += item.quantity;
+      // Item exists, increase quantity
+      final existingItem = _items[existingIndex];
+      final newQuantity = existingItem.quantity + item.quantity;
+      
+      // Check max quantity limit
+      if (existingItem.maxQuantity != null && 
+          newQuantity > existingItem.maxQuantity!) {
+        // Don't exceed max quantity
+        _items[existingIndex] = existingItem.copyWith(
+          quantity: existingItem.maxQuantity,
+        );
+      } else {
+        _items[existingIndex] = existingItem.copyWith(
+          quantity: newQuantity,
+        );
+      }
     } else {
+      // New item, add to cart
       _items.add(item);
     }
     notifyListeners();
   }
 
   void removeItem(int index) {
-    _items.removeAt(index);
+    if (index >= 0 && index < _items.length) {
+      _items.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  // Remove item by ID
+  void removeItemById(String id) {
+    _items.removeWhere((item) => item.id == id);
     notifyListeners();
   }
 
   void updateQuantity(int index, int quantity) {
-    if (quantity > 0) {
-      _items[index].quantity = quantity;
-    } else {
-      _items.removeAt(index);
+    if (index >= 0 && index < _items.length) {
+      if (quantity > 0) {
+        final item = _items[index];
+        
+        // Check max quantity limit
+        if (item.maxQuantity != null && quantity > item.maxQuantity!) {
+          _items[index] = item.copyWith(quantity: item.maxQuantity);
+        } else {
+          _items[index] = item.copyWith(quantity: quantity);
+        }
+      } else {
+        // Quantity is 0 or negative, remove item
+        _items.removeAt(index);
+      }
+      notifyListeners();
     }
-    notifyListeners();
+  }
+
+  // Update quantity by item ID
+  void updateQuantityById(String id, int quantity) {
+    final index = _items.indexWhere((item) => item.id == id);
+    if (index >= 0) {
+      updateQuantity(index, quantity);
+    }
+  }
+
+  // Update item notes
+  void updateItemNotes(int index, String notes) {
+    if (index >= 0 && index < _items.length) {
+      _items[index].notes = notes;
+      notifyListeners();
+    }
+  }
+
+  // Update item notes by ID
+  void updateItemNotesById(String id, String notes) {
+    final index = _items.indexWhere((item) => item.id == id);
+    if (index >= 0) {
+      updateItemNotes(index, notes);
+    }
   }
 
   void clearCart() {
     _items.clear();
     notifyListeners();
+  }
+
+  // Get item by ID
+  CartItem? getItemById(String id) {
+    try {
+      return _items.firstWhere((item) => item.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // Check if cart has items with discounts
+  bool get hasDiscountedItems {
+    return _items.any((item) => item.hasDiscount);
+  }
+
+  // Get count of items at max quantity
+  int get itemsAtMaxCount {
+    return _items.where((item) => item.isAtMaxQuantity).length;
   }
 }
