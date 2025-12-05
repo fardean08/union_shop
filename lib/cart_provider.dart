@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
+import 'services/cart_storage.dart';
 
 class CartItem {
   final String id;                    // Unique identifier for cart item
@@ -146,8 +147,11 @@ class CartItem {
 
 class CartProvider extends ChangeNotifier {
   final List<CartItem> _items = [];
+  bool _isLoaded = false;
 
   List<CartItem> get items => _items;
+
+  bool get isLoaded => _isLoaded;
 
   int get itemCount => _items.fold(0, (sum, item) => sum + item.quantity);
 
@@ -162,6 +166,32 @@ class CartProvider extends ChangeNotifier {
 
   // Get total items (unique products, not quantity)
   int get uniqueItemCount => _items.length;
+
+  /// Initialize and load cart from storage
+  Future<void> loadCart() async {
+    if (_isLoaded) return; // Already loaded
+    
+    try {
+      final savedItems = await CartStorage.loadCart();
+      _items.clear();
+      _items.addAll(savedItems);
+      _isLoaded = true;
+      notifyListeners();
+    } catch (e) {
+      print('Error loading cart: $e');
+      _isLoaded = true;
+      notifyListeners();
+    }
+  }
+
+  /// Save cart to storage
+  Future<void> _saveCart() async {
+    try {
+      await CartStorage.saveCartWithTimestamp(_items);
+    } catch (e) {
+      print('Error saving cart: $e');
+    }
+  }
 
   void addItem(CartItem item) {
     // Check if similar item exists (same product, size, color)
@@ -193,12 +223,14 @@ class CartProvider extends ChangeNotifier {
       _items.add(item);
     }
     notifyListeners();
+    _saveCart(); // Save after adding
   }
 
   void removeItem(int index) {
     if (index >= 0 && index < _items.length) {
       _items.removeAt(index);
       notifyListeners();
+      _saveCart(); // Save after removing
     }
   }
 
@@ -206,6 +238,7 @@ class CartProvider extends ChangeNotifier {
   void removeItemById(String id) {
     _items.removeWhere((item) => item.id == id);
     notifyListeners();
+    _saveCart(); // Save after removing
   }
 
   void updateQuantity(int index, int quantity) {
@@ -224,6 +257,7 @@ class CartProvider extends ChangeNotifier {
         _items.removeAt(index);
       }
       notifyListeners();
+      _saveCart(); // Save after updating
     }
   }
 
@@ -240,6 +274,7 @@ class CartProvider extends ChangeNotifier {
     if (index >= 0 && index < _items.length) {
       _items[index].notes = notes;
       notifyListeners();
+      _saveCart(); // Save after updating notes
     }
   }
 
@@ -254,6 +289,7 @@ class CartProvider extends ChangeNotifier {
   void clearCart() {
     _items.clear();
     notifyListeners();
+    _saveCart(); // Save after clearing
   }
 
   // Get item by ID

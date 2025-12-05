@@ -18,7 +18,7 @@ import 'package:union_shop/models/product.dart';
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => CartProvider(),
+      create: (_) => CartProvider()..loadCart(), // Load cart on app start
       child: const UnionShopApp(),
     ),
   );
