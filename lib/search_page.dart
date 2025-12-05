@@ -14,6 +14,14 @@ class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
   List<Map<String, String>> _searchResults = [];
   bool _isSearching = false;
+  final List<String> _popularSearches = [
+    'Hoodies',
+    'T-Shirts',
+    'Accessories',
+    'Union',
+    'Purple',
+    'Black',
+  ];
 
   @override
   void initState() {
