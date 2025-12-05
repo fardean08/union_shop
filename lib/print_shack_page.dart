@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'models/cart_variant.dart';
 import 'cart_provider.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class PrintShackPage extends StatefulWidget {
   const PrintShackPage({super.key});
@@ -20,36 +22,67 @@ class _PrintShackPageState extends State<PrintShackPage> {
     _line1Controller.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = ResponsiveHelper.isMobile(context);
+    
     return Scaffold(
+      drawer: isMobile ? const MobileDrawer() : null,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            // Announcement Bar
+          children: [            // Announcement Bar
             Container(
               width: double.infinity,
               color: Colors.deepPurple,
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: const Text(
+              padding: EdgeInsets.symmetric(
+                vertical: ResponsiveHelper.value(
+                  context: context,
+                  mobile: 6.0,
+                  desktop: 8.0,
+                ),
+              ),
+              child: Text(
                 'BIG SALE! OUR ESSENTIAL RANGE HAS DROPPED IN PRICE! OVER 20% OFF! COME GRAB YOURS WHILE STOCK LASTS!',
                 style: TextStyle(
-                    color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: ResponsiveHelper.fontSize(
+                    context: context,
+                    mobile: 11.0,
+                    tablet: 12.0,
+                    desktop: 13.0,
+                  ),
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
-              ),            ),
+              ),
+            ),
             
             // Navbar
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveHelper.value(
+                  context: context,
+                  mobile: 12.0,
+                  desktop: 24.0,
+                ),
+                vertical: 16,
+              ),
               child: Row(
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
-                    onPressed: () => Navigator.pop(context),
-                  ),                  GestureDetector(
+                  if (isMobile)
+                    Builder(
+                      builder: (context) => IconButton(
+                        icon: const Icon(Icons.menu, color: Color(0xFF4d2963)),
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                      ),
+                    )
+                  else
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
+                      onPressed: () => Navigator.pop(context),
+                    ),GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, '/');
                     },

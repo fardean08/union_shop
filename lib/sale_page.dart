@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class SalePage extends StatefulWidget {
   const SalePage({super.key});
@@ -16,10 +18,10 @@ class _SalePageState extends State<SalePage> {
       _sortOption = newSort;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ResponsiveHelper.isMobile(context) ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
