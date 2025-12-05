@@ -256,18 +256,28 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ],
               ),
-            ),
-
-            // Product details
+            ),            // Product details
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.all(24),
+              padding: EdgeInsets.all(
+                ResponsiveHelper.value(
+                  context: context,
+                  mobile: 16.0,
+                  tablet: 20.0,
+                  desktop: 24.0,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Product image
                   Container(
-                    height: 400,
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 300.0,
+                      tablet: 350.0,
+                      desktop: 400.0,
+                    ),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -281,19 +291,30 @@ class _ProductPageState extends State<ProductPage> {
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
                             color: Colors.grey[300],
-                            child: const Center(
+                            child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
                                     Icons.image_not_supported,
-                                    size: 64,
+                                    size: ResponsiveHelper.value(
+                                      context: context,
+                                      mobile: 48.0,
+                                      desktop: 64.0,
+                                    ),
                                     color: Colors.grey,
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Text(
                                     'Image unavailable',
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: ResponsiveHelper.fontSize(
+                                        context: context,
+                                        mobile: 12.0,
+                                        desktop: 14.0,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -304,27 +325,51 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 24),                  // Product name
+                  SizedBox(
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 16.0,
+                      desktop: 24.0,
+                    ),
+                  ),
+
+                  // Product name
                   Text(
                     product?.title ?? 'UNION Shop Product',
-                    style: const TextStyle(
-                      fontSize: 28,
+                    style: TextStyle(
+                      fontSize: ResponsiveHelper.fontSize(
+                        context: context,
+                        mobile: 20.0,
+                        tablet: 24.0,
+                        desktop: 28.0,
+                      ),
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
 
-                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 8.0,
+                      desktop: 12.0,
+                    ),
+                  ),
 
                   // Product price
                   Row(
                     children: [
                       Text(
                         product?.priceString ?? '£15.00',
-                        style: const TextStyle(
-                          fontSize: 24,
+                        style: TextStyle(
+                          fontSize: ResponsiveHelper.fontSize(
+                            context: context,
+                            mobile: 20.0,
+                            tablet: 22.0,
+                            desktop: 24.0,
+                          ),
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF4d2963),
+                          color: const Color(0xFF4d2963),
                         ),
                       ),
                       if (product?.oldPrice != null) ...[
@@ -332,27 +377,221 @@ class _ProductPageState extends State<ProductPage> {
                         Text(
                           product!.oldPriceString!,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 16.0,
+                              desktop: 18.0,
+                            ),
                             color: Colors.grey.shade600,
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
                       ],
                     ],
-                  ),                  const SizedBox(height: 8),
+                  ),
+
+                  const SizedBox(height: 8),
                   
-                  const Text(
+                  Text(
                     'Tax included.',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: ResponsiveHelper.fontSize(
+                        context: context,
+                        mobile: 12.0,
+                        desktop: 14.0,
+                      ),
                       color: Colors.grey,
                     ),
                   ),
 
-                  const SizedBox(height: 24),
-
-                  // Color, Size and Quantity Row
-                  Row(
+                  SizedBox(
+                    height: ResponsiveHelper.value(
+                      context: context,
+                      mobile: 16.0,
+                      desktop: 24.0,
+                    ),
+                  ),                  // Color, Size and Quantity Row
+                  isMobile
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Color Dropdown
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Color',
+                                  style: TextStyle(
+                                    fontSize: ResponsiveHelper.fontSize(
+                                      context: context,
+                                      mobile: 13.0,
+                                      desktop: 14.0,
+                                    ),
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey.shade300),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      value: selectedColour,
+                                      isExpanded: true,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      items: (product?.colors ?? ['Black', 'White', 'Navy']).map((colour) {
+                                        return DropdownMenuItem(
+                                          value: colour,
+                                          child: Text(colour),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedColour = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            // Size Dropdown
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Size',
+                                  style: TextStyle(
+                                    fontSize: ResponsiveHelper.fontSize(
+                                      context: context,
+                                      mobile: 13.0,
+                                      desktop: 14.0,
+                                    ),
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey.shade300),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      value: selectedSize,
+                                      isExpanded: true,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                                      items: (product?.sizes ?? ['S', 'M', 'L', 'XL']).map((size) {
+                                        return DropdownMenuItem(
+                                          value: size,
+                                          child: Text(size),
+                                        );
+                                      }).toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedSize = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            // Quantity Input
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Quantity',
+                                  style: TextStyle(
+                                    fontSize: ResponsiveHelper.fontSize(
+                                      context: context,
+                                      mobile: 13.0,
+                                      desktop: 14.0,
+                                    ),
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey.shade300),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Center(
+                                          child: Text(
+                                            '$quantity',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        children: [
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  quantity++;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 30,
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: Colors.grey.shade300),
+                                                    bottom: BorderSide(color: Colors.grey.shade300),
+                                                  ),
+                                                ),
+                                                child: const Icon(Icons.arrow_drop_up, size: 20),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: InkWell(
+                                              onTap: () {
+                                                if (quantity > 1) {
+                                                  setState(() {
+                                                    quantity--;
+                                                  });
+                                                }
+                                              },
+                                              child: Container(
+                                                width: 30,
+                                                decoration: BoxDecoration(
+                                                  border: Border(
+                                                    left: BorderSide(color: Colors.grey.shade300),
+                                                  ),
+                                                ),
+                                                child: const Icon(Icons.arrow_drop_down, size: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Color Dropdown
