@@ -733,9 +733,76 @@ class Footer extends StatelessWidget {
     return Container(
       color: Colors.grey[100],
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
+          // Search Section
+          Container(
+            padding: const EdgeInsets.all(24),
+            margin: const EdgeInsets.only(bottom: 32),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.search, color: Color(0xFF4d2963), size: 24),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Search for products...',
+                      border: InputBorder.none,
+                      isDense: true,
+                    ),
+                    onSubmitted: (value) {
+                      if (value.trim().isNotEmpty) {
+                        Navigator.pushNamed(
+                          context,
+                          '/search',
+                          arguments: value.trim(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4d2963),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 32,
+                      vertical: 12,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/search');
+                  },
+                  child: const Text(
+                    'SEARCH',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Footer Links
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           // Opening Hours
           Expanded(
             child: Column(
