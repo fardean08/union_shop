@@ -845,17 +845,21 @@ class FeaturedSection extends StatelessWidget {
             horizontal: ResponsiveHelper.horizontalPadding(context),
           ),
           child: _buildProductGrid(context, essentialProducts, 'featured'),
-        ),
-        const SizedBox(height: 80),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        ),        const SizedBox(height: 80),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           child: Text(
             'SIGNATURE RANGE',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: ResponsiveHelper.fontSize(
+                context: context,
+                mobile: 14.0,
+                tablet: 15.0,
+                desktop: 16.0,
+              ),
               fontWeight: FontWeight.w600,
               letterSpacing: 2,
-              color: Color(0xFF666666),
+              color: const Color(0xFF666666),
             ),
             textAlign: TextAlign.center,
           ),
