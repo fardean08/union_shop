@@ -62,9 +62,14 @@ class SignupForm extends StatelessWidget {
           ),
           const SizedBox(height: 32),
           ElevatedButton(
-            onPressed: null,
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Sign Up button pressed')),
+              );
+            },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF4d2963),
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 48, vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),
@@ -79,7 +84,7 @@ class SignupForm extends StatelessWidget {
             },
             child: const Text(
               "Already have an account? Login",
-              style: TextStyle(fontSize: 16, color: Colors.deepPurple),
+              style: TextStyle(fontSize: 16, color: Colors.green),
             ),
           ),
         ],

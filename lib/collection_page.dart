@@ -106,16 +106,14 @@ class ProductGrid extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
-            children: essentialProducts
-                .map((product) => Expanded(
-                      child: ProductCard(
-                        title: product['title']!,
-                        imageUrl: product['imageUrl']!,
-                        oldPrice: product['oldPrice'],
-                        price: product['price']!,
-                      ),
-                    ))
-                .toList(),
+            children: essentialProducts.map((product) => Expanded(
+              child: ProductCard(
+                title: product['title'] ?? '',
+                imageUrl: product['imageUrl'] ?? '',
+                oldPrice: product['oldPrice'],
+                price: product['price'] ?? '',
+              ),
+            )).toList(),
           ),
         ),
         const Padding(
@@ -126,16 +124,14 @@ class ProductGrid extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
-            children: signatureProducts
-                .map((product) => Expanded(
-                      child: ProductCard(
-                        title: product['title']!,
-                        imageUrl: product['imageUrl']!,
-                        oldPrice: null,
-                        price: product['price']!,
-                      ),
-                    ))
-                .toList(),
+            children: signatureProducts.map((product) => Expanded(
+              child: ProductCard(
+                title: product['title'] ?? '',
+                imageUrl: product['imageUrl'] ?? '',
+                oldPrice: null,
+                price: product['price'] ?? '',
+              ),
+            )).toList(),
           ),
         ),
       ],
