@@ -68,16 +68,32 @@ class CollectionsPage extends StatelessWidget {
             const Text('Collections'),
           ],
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      ),      body: Padding(
+        padding: EdgeInsets.all(
+          ResponsiveHelper.value(
+            context: context,
+            mobile: 12.0,
+            tablet: 16.0,
+            desktop: 16.0,
+          ),
+        ),
         child: LayoutBuilder(builder: (context, constraints) {
-          final cross = constraints.maxWidth < 600 ? 1 : 3;
+          final cross = ResponsiveHelper.gridColumns(
+            context,
+            mobile: 1,
+            tablet: 2,
+            desktop: 3,
+          );
           return GridView.count(
             crossAxisCount: cross,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
-            childAspectRatio: 3,
+            childAspectRatio: ResponsiveHelper.value(
+              context: context,
+              mobile: 2.5,
+              tablet: 3.0,
+              desktop: 3.0,
+            ),
             children: categories.map((cat) {
               return InkWell(
                 onTap: () => Navigator.pushNamed(context, cat['route'] as String),
@@ -92,21 +108,37 @@ class CollectionsPage extends StatelessWidget {
                             left: Radius.circular(8)),
                         child: Image.network(
                           cat['image'] as String,
-                          width: 140,
+                          width: ResponsiveHelper.value(
+                            context: context,
+                            mobile: 100.0,
+                            desktop: 140.0,
+                          ),
                           height: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (c, e, s) => Container(
-                            width: 140,
+                            width: ResponsiveHelper.value(
+                              context: context,
+                              mobile: 100.0,
+                              desktop: 140.0,
+                            ),
                             color: Colors.grey[300],
                             child: const Icon(Icons.image_not_supported),
                           ),
                         ),
                       ),
                       const SizedBox(width: 12),
-                      Text(
-                        cat['title'] as String,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
+                      Expanded(
+                        child: Text(
+                          cat['title'] as String,
+                          style: TextStyle(
+                            fontSize: ResponsiveHelper.fontSize(
+                              context: context,
+                              mobile: 16.0,
+                              desktop: 18.0,
+                            ),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ],
                   ),

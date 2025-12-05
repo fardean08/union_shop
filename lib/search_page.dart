@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'utils/responsive.dart';
+import 'widgets/mobile_drawer.dart';
 
 class SearchPage extends StatefulWidget {
   final String? initialQuery;
@@ -126,10 +128,10 @@ class _SearchPageState extends State<SearchPage> {
       return titleLower.contains(queryLower) ||
           categoryLower.contains(queryLower);
     }).toList();
-  }
-  @override
+  }  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ResponsiveHelper.isMobile(context) ? const MobileDrawer() : null,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
