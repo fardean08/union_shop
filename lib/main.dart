@@ -799,8 +799,7 @@ class FeaturedSection extends StatelessWidget {
     );
   }
     @override  Widget build(BuildContext context) {
-    final essentialProducts = [
-      {
+    final essentialProducts = [      {
         'title': 'Limited Edition Essential Zip Hoodies',
         'imageUrl':
             'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
@@ -810,7 +809,7 @@ class FeaturedSection extends StatelessWidget {
       {
         'title': 'Essential T-Shirt',
         'imageUrl':
-            'https://shop.upsu.net/cdn/shop/files/Essentials_Green_Front_480x480.jpg?v=1698065452',
+            'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=800&q=80',
         'oldPrice': '£10.00',
         'price': '£6.99',
       },
