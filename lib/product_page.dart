@@ -89,14 +89,13 @@ class _ProductPageState extends State<ProductPage> {
               height: 100,
               color: Colors.white,
               child: Column(
-                children: [
-                  // Top banner
+                children: [                  // Top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     color: const Color(0xFF4d2963),
                     child: const Text(
-                      'PLACEHOLDER HEADER TEXT',
+                      'The UNION Shop - Quality Apparel & Accessories',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
@@ -272,11 +271,9 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 24),
-
-                  // Product name
+                  const SizedBox(height: 24),                  // Product name
                   Text(
-                    product?.title ?? 'Placeholder Product Name',
+                    product?.title ?? 'UNION Shop Product',
                     style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -522,9 +519,7 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 24),
-
-                  // Product description
+                  const SizedBox(height: 24),                  // Product description
                   const Text(
                     'Description',
                     style: TextStyle(
@@ -534,9 +529,9 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'This is a placeholder description for the product. Students should replace this with real product information and implement proper data management.',
-                    style: TextStyle(
+                  Text(
+                    product?.productDescription ?? 'Quality apparel from The UNION Shop. Designed for comfort, style, and durability. Perfect for students and anyone looking for great everyday wear.',
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                       height: 1.5,
@@ -544,22 +539,41 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ],
               ),
-            ),
-
-            // Footer
+            ),            // Footer
             Container(
               width: double.infinity,
               color: Colors.grey[50],
               padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        '© 2025 The UNION Shop',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(width: 24),
+                      Text(
+                        '•',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      SizedBox(width: 24),
+                      Text(
+                        'Quality Apparel & Accessories',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),          ],
+            ),],
         ),
       ),
     );
