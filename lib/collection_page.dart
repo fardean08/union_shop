@@ -25,49 +25,61 @@ class CollectionPage extends StatelessWidget {
                 mainAxisSpacing: 24,
                 childAspectRatio: 0.9,
                 children: sampleCollections.map((collection) {
-                  return Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 1.2,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(6),
-                            child: Image.network(
-                              collection.imageUrl,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported, color: Colors.grey),
-                                  ),
-                                );
-                              },
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/collection',
+                        arguments: collection,
+                      );
+                    },
+                    child: Card(
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 1.2,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: Image.network(
+                                collection.imageUrl,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    child: const Center(
+                                      child: Icon(Icons.image_not_supported,
+                                          color: Colors.grey),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            collection.name,
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          const SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              collection.name,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            '${collection.products.length} products',
-                            style: const TextStyle(fontSize: 13, color: Colors.grey),
+                          const SizedBox(height: 8),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              '${collection.products.length} products',
+                              style: const TextStyle(
+                                  fontSize: 13, color: Colors.grey),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 }).toList(),
