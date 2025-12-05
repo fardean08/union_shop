@@ -672,6 +672,122 @@ class _HeroBannerState extends State<HeroBanner> {
 
 class FeaturedSection extends StatelessWidget {
   const FeaturedSection({super.key});
+  
+  Widget _buildProductGrid(BuildContext context, List<Map<String, dynamic>> products, String category) {
+    final isMobile = ResponsiveHelper.isMobile(context);
+    
+    if (isMobile) {
+      // Mobile: Stack vertically
+      return Column(
+        children: products.map((product) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 32),
+            child: _buildProductCard(context, product, category),
+          );
+        }).toList(),
+      );
+    } else {
+      // Desktop/Tablet: Row layout
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: products.map((product) {
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: _buildProductCard(context, product, category),
+            ),
+          );
+        }).toList(),
+      );
+    }
+  }
+  
+  Widget _buildProductCard(BuildContext context, Map<String, dynamic> product, String category) {
+    return InkWell(
+      onTap: () {
+        // Create a Product object for navigation
+        final productObj = Product(
+          id: product['title'] as String,
+          title: product['title'] as String,
+          imageUrl: product['imageUrl'] as String,
+          price: double.parse((product['price'] as String).replaceAll('£', '')),
+          oldPrice: product['oldPrice'] != null 
+              ? double.parse((product['oldPrice'] as String).replaceAll('£', ''))
+              : null,
+          category: category,
+          sizes: ['S', 'M', 'L', 'XL'],
+          colors: category == 'featured' 
+              ? ['Baby Pink', 'Black', 'White', 'Navy']
+              : ['Sage Green', 'Navy', 'Black', 'White'],
+          isOnSale: product['oldPrice'] != null,
+        );
+        Navigator.pushNamed(context, '/product', arguments: productObj);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AspectRatio(
+            aspectRatio: 1.0,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[100],
+              ),
+              child: Image.network(
+                product['imageUrl'] as String,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[300],
+                    child: const Center(
+                      child: Icon(Icons.image_not_supported,
+                          color: Colors.grey, size: 48),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            product['title'] as String,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF666666),
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              if (product['oldPrice'] != null) ...[
+                Text(
+                  product['oldPrice'] as String,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                  ),
+                ),
+                const SizedBox(width: 8),
+              ],
+              Text(
+                product['price'] as String,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Color(0xFF666666),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     final essentialProducts = [
@@ -703,117 +819,32 @@ class FeaturedSection extends StatelessWidget {
             'https://shop.upsu.net/cdn/shop/files/Signature_Navy_Front_480x480.jpg?v=1698065728',
         'price': '£14.99',
       },
-    ];
-      return Column(
+    ];      return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(height: 48),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      children: [        const SizedBox(height: 48),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           child: Text(
             'ESSENTIAL RANGE - OVER 20% OFF!',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: ResponsiveHelper.fontSize(
+                context: context,
+                mobile: 14.0,
+                tablet: 15.0,
+                desktop: 16.0,
+              ),
               fontWeight: FontWeight.w600,
               letterSpacing: 2,
-              color: Color(0xFF666666),
+              color: const Color(0xFF666666),
             ),
             textAlign: TextAlign.center,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 120),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: essentialProducts.map((product) {
-              return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: InkWell(
-                    onTap: () {
-                      // Create a Product object for navigation
-                      final productObj = Product(
-                        id: product['title'] as String,
-                        title: product['title'] as String,
-                        imageUrl: product['imageUrl'] as String,
-                        price: double.parse((product['price'] as String).replaceAll('£', '')),
-                        oldPrice: product['oldPrice'] != null 
-                            ? double.parse((product['oldPrice'] as String).replaceAll('£', ''))
-                            : null,
-                        category: 'featured',
-                        sizes: ['S', 'M', 'L', 'XL'],
-                        colors: ['Baby Pink', 'Black', 'White', 'Navy'],
-                        isOnSale: product['oldPrice'] != null,
-                      );
-                      Navigator.pushNamed(context, '/product', arguments: productObj);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 1.0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                            ),
-                            child: Image.network(
-                              product['imageUrl'] as String,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey, size: 48),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          product['title'] as String,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF666666),
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            if (product['oldPrice'] != null) ...[
-                              Text(
-                                product['oldPrice'] as String,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.grey,
-                                  decoration: TextDecoration.lineThrough,
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                            ],
-                            Text(
-                              product['price'] as String,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF666666),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
+          padding: EdgeInsets.symmetric(
+            horizontal: ResponsiveHelper.horizontalPadding(context),
           ),
+          child: _buildProductGrid(context, essentialProducts, 'featured'),
         ),
         const SizedBox(height: 80),
         const Padding(
@@ -830,81 +861,10 @@ class FeaturedSection extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 120),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: signatureProducts.map((product) {
-              return Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: InkWell(
-                    onTap: () {
-                      // Create a Product object for navigation
-                      final productObj = Product(
-                        id: product['title'] as String,
-                        title: product['title'] as String,
-                        imageUrl: product['imageUrl'] as String,
-                        price: double.parse((product['price'] as String).replaceAll('£', '')),
-                        oldPrice: null,
-                        category: 'signature',
-                        sizes: ['S', 'M', 'L', 'XL'],
-                        colors: ['Sage Green', 'Navy', 'Black', 'White'],
-                        isOnSale: false,
-                      );
-                      Navigator.pushNamed(context, '/product', arguments: productObj);
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AspectRatio(
-                          aspectRatio: 1.0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                            ),
-                            child: Image.network(
-                              product['imageUrl'] as String,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey, size: 48),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          product['title'] as String,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF666666),
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          product['price'] as String,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF666666),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
+          padding: EdgeInsets.symmetric(
+            horizontal: ResponsiveHelper.horizontalPadding(context),
           ),
+          child: _buildProductGrid(context, signatureProducts, 'signature'),
         ),
         const SizedBox(height: 48),
       ],
