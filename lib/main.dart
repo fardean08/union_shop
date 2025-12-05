@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_page.dart';
 import 'package:union_shop/collections_page.dart';
+import 'package:union_shop/collections_shirts_page.dart';
+import 'package:union_shop/collections_hoodies_page.dart';
+import 'package:union_shop/collections_accessories_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/login_page.dart';
 import 'package:union_shop/signup_page.dart';
 import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/cart_provider.dart';
-import 'package:union_shop/collections_shirts_page.dart';
-import 'package:union_shop/collections_hoodies_page.dart';
-import 'package:union_shop/collections_accessories_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -28,8 +28,7 @@ class UnionShopApp extends StatelessWidget {
       ),
       home: const HomeScreen(),
       // By default, the app starts at the '/' route, which is the HomeScreen
-      initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
+      initialRoute: '/',      // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
       routes: {
         '/product': (context) {
@@ -77,7 +76,6 @@ class AnnouncementBar extends StatelessWidget {
 
 class Navbar extends StatelessWidget {
   const Navbar({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,6 +83,11 @@ class Navbar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
+          if (Navigator.canPop(context))
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
+              onPressed: () => Navigator.pop(context),
+            ),
           GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/');
@@ -365,13 +368,12 @@ class FeaturedSection extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 120, // smaller image height
+                                AspectRatio(
+                                  aspectRatio: 1.2,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
                                     child: Image.network(
                                       product['imageUrl'] as String,
-                                      width: double.infinity,
                                       fit: BoxFit.cover,
                                       errorBuilder:
                                           (context, error, stackTrace) {
@@ -473,13 +475,12 @@ class FeaturedSection extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 120, // smaller image height
+                                AspectRatio(
+                                  aspectRatio: 1.2,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(6),
                                     child: Image.network(
                                       product['imageUrl'] as String,
-                                      width: double.infinity,
                                       fit: BoxFit.cover,
                                       errorBuilder:
                                           (context, error, stackTrace) {
