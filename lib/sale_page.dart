@@ -30,18 +30,40 @@ class SaleBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 140,
-      color: const Color(0xFF4d2963),
-      child: const Center(
-        child: Text(
-          'SALE!',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 48,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 4,
+      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+      color: Colors.white,
+      child: Column(
+        children: [
+          const Text(
+            'SALE',
+            style: TextStyle(
+              color: Color(0xFF333333),
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+            ),
           ),
-        ),
+          const SizedBox(height: 16),
+          const Text(
+            'Don\'t miss out! Get yours before they\'re all gone!',
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 32),
+          const Text(
+            'All prices shown are inclusive of the discount 🧾',
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
