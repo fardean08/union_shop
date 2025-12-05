@@ -35,20 +35,63 @@ class Navbar extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.arrow_back, color: Color(0xFF4d2963)),
               onPressed: () => Navigator.pop(context),
-            ),
-          GestureDetector(
+            ),          GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: Image.network(
-              'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
+            child: SizedBox(
               height: 40,
-              errorBuilder: (context, error, stackTrace) {
-                return const Text(
-                  'The UNION',
-                  style: TextStyle(
-                    color: Color(0xFF4d2963),
-                    fontSize: 28,
+              child: Image.network(
+                'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
+                height: 40,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return SizedBox(
+                    height: 40,
+                    width: 150,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                        strokeWidth: 2,
+                        color: const Color(0xFF4d2963),
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'The ',
+                          style: TextStyle(
+                            color: Color(0xFF4d2963),
+                            fontSize: 28,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: 'cursive',
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'UNION',
+                          style: TextStyle(
+                            color: Color(0xFF4d2963),
+                            fontSize: 28,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
                     fontWeight: FontWeight.bold,
                     letterSpacing: 2,
                   ),

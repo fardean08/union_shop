@@ -101,34 +101,59 @@ class Navbar extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, '/');
             },
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.network(
-                  'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
-                  height: 50,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return RichText(
-                      text: const TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'The ',
-                            style: TextStyle(
-                              color: Color(0xFF4d2963),
-                              fontSize: 32,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.italic,
-                              fontFamily: 'cursive',
-                            ),
+            child: SizedBox(
+              height: 50,
+              child: Image.network(
+                'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
+                height: 50,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return SizedBox(
+                    height: 50,
+                    width: 180,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                        strokeWidth: 2,
+                        color: const Color(0xFF4d2963),
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'The ',
+                          style: TextStyle(
+                            color: Color(0xFF4d2963),
+                            fontSize: 32,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: 'cursive',
                           ),
-                          TextSpan(
-                            text: 'UNION',
-                            style: TextStyle(
-                              color: Color(0xFF4d2963),
-                              fontSize: 32,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.5,
+                        ),
+                        TextSpan(
+                          text: 'UNION',
+                          style: TextStyle(
+                            color: Color(0xFF4d2963),
+                            fontSize: 32,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
                             ),
                           ),
                         ],

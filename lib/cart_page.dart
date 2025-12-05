@@ -29,37 +29,57 @@ class _CartPageState extends State<CartPage> {
         elevation: 0,
         title: Row(
           children: [
-            Image.network(
-              'https://shop.upsu.net/cdn/shop/files/upsu_540x.png?v=1614735854',
-              height: 35,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'The ',
-                        style: TextStyle(
-                          color: Color(0xFF4d2963),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: 'cursive',
-                        ),
+            SizedBox(
+              height: 40,
+              child: Image.network(
+                'https://memplus-dev.ams3.cdn.digitaloceanspaces.com/media/RRzv6t6W0mp2ty8R9h4pMz6P4XQDBejVMUn8D2Hb.png',
+                height: 40,
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return SizedBox(
+                    height: 40,
+                    width: 150,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                        strokeWidth: 2,
+                        color: const Color(0xFF4d2963),
                       ),
-                      TextSpan(
-                        text: 'UNION',
-                        style: TextStyle(
-                          color: Color(0xFF4d2963),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.2,
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'The ',
+                          style: TextStyle(
+                            color: Color(0xFF4d2963),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            fontFamily: 'cursive',
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                        TextSpan(
+                          text: 'UNION',
+                          style: TextStyle(
+                            color: Color(0xFF4d2963),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(width: 16),
             const Text(
